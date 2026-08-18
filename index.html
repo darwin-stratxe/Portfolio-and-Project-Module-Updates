@@ -1,0 +1,1018 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PPMIS: From enterprise direction to delivered value</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+      .source-figure {
+        margin: 20px 0 27px;
+        padding: 0;
+        border: 0;
+        background: transparent;
+      }
+      .source-figure img {
+        display: block;
+        width: auto;
+        max-width: 100%;
+        height: auto;
+        margin: 0 auto;
+      }
+      .source-figure.wide img {
+        width: 100%;
+      }
+      .source-figure figcaption {
+        margin-top: 13px;
+        padding-top: 0;
+        border-top: 0;
+        color: var(--muted);
+        font-size: 11px;
+        line-height: 1.5;
+      }
+      .source-figure.plain {
+        padding: 0;
+        border: 0;
+        background: transparent;
+      }
+      .source-figure.plain figcaption {
+        padding-top: 0;
+        border-top: 0;
+      }
+      .cite {
+        margin-left: 2px;
+        vertical-align: super;
+        font-size: 8px;
+        font-weight: 750;
+        line-height: 0;
+      }
+      .cite a {
+        color: var(--blue);
+        text-decoration: none;
+      }
+      .cite a:hover,
+      .cite a:focus-visible {
+        text-decoration: underline;
+      }
+      .content {
+        max-width: 820px;
+        padding-right: 50px;
+      }
+      @media (max-width: 1040px) {
+        .grid {
+          grid-template-columns: minmax(0, 1fr);
+        }
+        .toc {
+          display: none;
+        }
+        .content {
+          max-width: 780px;
+          padding-right: 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <div class="crumb">
+        <span>PPMIS</span>
+      </div>
+      <h1>Project and Portfolio Management Information System</h1>
+
+      <div class="grid">
+        <main class="content">
+          <section class="sec" id="problem">
+            <h3 class="sec-t">
+              How do organisations manage portfolios of projects?
+            </h3>
+            <p>
+              An organisation usually does not begin with a portfolio. It begins
+              with things it wants or needs to do.
+            </p>
+            <p>
+              A business area identifies a problem, an executive proposes an
+              initiative, a regulatory requirement creates new work, or the
+              organisation decides that part of its strategy requires
+              investment. Each request may make sense on its own. The difficulty
+              begins when the organisation has many of them competing for the
+              same money, people, technology and management attention.
+            </p>
+            <p>
+              Consider a business whose strategy includes reducing the time and
+              cost required to deliver one of its major services. A business
+              area proposes a new digital service and asks for the work to be
+              approved.
+            </p>
+            <p>
+              Viewed on its own, the decision seems straightforward: define the
+              expected benefit, estimate the cost, determine what needs to be
+              delivered and decide whether the investment is worthwhile.
+            </p>
+            <p>But the initiative does not exist on its own.</p>
+            <p>
+              The platform it would rely on is already being upgraded elsewhere
+              in the organisation. Some of the specialists needed for the work
+              have already been committed to other projects. Finance has only
+              part of the required funding available in the current period.
+              Another programme may already be delivering something that
+              overlaps with the proposed solution.
+            </p>
+            <p>
+              The management question therefore changes from
+              <strong>should we approve this project?</strong> to
+              <strong
+                >should this work be done at all, should it be done now, where
+                does it belong, what existing work does it affect, and what
+                would the organisation have to delay or change in order to
+                deliver it?</strong
+              >
+            </p>
+            <p>
+              Once the organisation has dozens or hundreds of initiatives, the
+              same problem exists across the enterprise. Projects and programmes
+              compete for constrained resources. Dependencies cross
+              organisational boundaries. Some investments support several
+              strategic objectives while others become less important as
+              priorities change. Decisions made at one level affect plans and
+              commitments elsewhere.
+            </p>
+            <p>
+              This creates another problem: the information behind those
+              decisions has to travel with the work.
+            </p>
+            <p>
+              Why was an initiative approved? What benefit was it expected to
+              produce? Who owns that benefit? What budget and resources were
+              authorised? What other work does it depend on? If circumstances
+              change six months later, can management still see the reasoning
+              behind the original investment and decide whether it should
+              continue?
+            </p>
+            <p>
+              Managing a portfolio therefore involves more than monitoring
+              whether individual projects are on schedule. At enterprise level,
+              it means turning strategy into a coordinated set of investments,
+              deciding which work should proceed, balancing that work against
+              available capacity and funding, managing relationships between
+              initiatives, and continually reassessing those decisions as
+              conditions change.
+            </p>
+            <p>
+              A
+              <strong
+                >Project and Portfolio Management Information System
+                (PPMIS)</strong
+              >
+              provides the management and information thread through which those
+              decisions, plans and results can remain connected.
+            </p>
+            <p>
+              To understand what such a system needs to support, it helps to
+              follow the work through the
+              <strong>Enterprise Management Framework</strong>, beginning with
+              enterprise planning and moving through portfolio planning,
+              portfolio management, work management and ultimately operations.
+            </p>
+          </section>
+
+          <section class="sec" id="framework">
+            <h3 class="sec-t">The Enterprise Management Framework</h3>
+            <p>
+              The Enterprise Management Framework explains how an organisation
+              moves from direction to delivery. It contains five connected
+              components: enterprise planning, portfolio planning, portfolio
+              management, work management and operations management. The
+              framework is useful because it shows what must happen before work
+              becomes a project or programme, how that work is selected and
+              delivered, and the supporting management functions needed across
+              the process.
+            </p>
+            <figure class="source-figure plain">
+              <a
+                href="https://www.pmi.org/learning/library/work-delivery-process-project-portfolio-management-6680"
+                target="_blank"
+                rel="noopener"
+              >
+                <img
+                  src="assets/pmi-enterprise-management-framework.jpg"
+                  alt="PMI Enterprise Management Framework showing enterprise planning, portfolio planning, portfolio management, work management and operations management"
+                />
+              </a>
+              <figcaption>
+                Enterprise Management Framework, Exhibit 1.<sup class="cite"
+                  ><a
+                    href="https://www.pmi.org/learning/library/work-delivery-process-project-portfolio-management-6680"
+                    target="_blank"
+                    rel="noopener"
+                    aria-label="Source 1"
+                    >[1]</a
+                  ></sup
+                >
+              </figcaption>
+            </figure>
+
+            <p>
+              Read from the top, enterprise planning defines the direction;
+              portfolio planning organises that direction into manageable areas
+              of investment; portfolio management evaluates and prioritises the
+              work that should proceed; work management provides the channels
+              through which that work is delivered; and operations management
+              provides the supporting functions that connect governance,
+              financial management, project and programme management, capacity
+              management, resource management, maintenance and support.
+            </p>
+            <p>
+              The service problem described above moves through these
+              components, becoming more specific as it moves from an intended
+              outcome to a potential investment, then to prioritised and
+              authorised work, and finally into delivery.
+            </p>
+          </section>
+
+          <section class="sec" id="enterprise-planning">
+            <h3 class="sec-t">Enterprise planning</h3>
+            <p>
+              Enterprise planning establishes the direction against which later
+              investment decisions will be made. Boles describes it as the
+              process through which leadership determines the overall course of
+              the organisation by considering market conditions, financial
+              expectations, regulatory obligations and other enterprise
+              requirements, and bringing them together into a coherent
+              strategy.<sup class="cite"
+                ><a
+                  href="https://www.pmi.org/learning/library/work-delivery-process-project-portfolio-management-6680"
+                  target="_blank"
+                  rel="noopener"
+                  aria-label="Source 1"
+                  >[1]</a
+                ></sup
+              >
+              In practice, organisations normally reach that direction through a
+              combination of
+              <strong
+                >environmental analysis, performance analysis, strategic choice,
+                objective setting and resource planning</strong
+              >
+              rather than beginning with a list of proposed projects.
+            </p>
+            <p>
+              The first task is to understand the organisation’s current
+              position and the conditions around it. External scanning tools
+              such as <strong>PESTLE</strong> can be used to structure
+              political, economic, social, technological, legal and
+              environmental factors, while <strong>SWOT</strong> can combine
+              those external opportunities and threats with internal strengths
+              and weaknesses. SWOT is specifically intended to help match
+              organisational goals and capabilities to the environment in which
+              the organisation operates.<sup class="cite"
+                ><a
+                  href="https://www.cipd.org/en/knowledge/factsheets/swot-analysis-factsheet/"
+                  target="_blank"
+                  rel="noopener"
+                  aria-label="Source 2"
+                  >[2]</a
+                ></sup
+              >
+              Organisations also examine internal performance data, financial
+              forecasts, customer or citizen demand, regulatory obligations,
+              existing capabilities and known performance gaps. The purpose of
+              this analysis is not simply to describe the organisation; it is to
+              identify
+              <strong
+                >where the current state is inconsistent with the future state
+                leadership wants</strong
+              >.
+            </p>
+            <p>
+              Strategic planning then turns that evidence into choices. One
+              useful way of understanding this process is
+              <strong
+                >diagnose → forecast → search → choose → commit → evolve</strong
+              >: establish the starting position, consider how conditions may
+              change, evaluate possible responses, choose a direction, commit
+              resources and continually revisit the strategy as new information
+              appears.<sup class="cite"
+                ><a
+                  href="https://www.mckinsey.com/capabilities/strategy-and-corporate-finance/our-insights/mastering-the-building-blocks-of-strategy"
+                  target="_blank"
+                  rel="noopener"
+                  aria-label="Source 3"
+                  >[3]</a
+                ></sup
+              >
+              This matters because a strategy such as “improve digital services”
+              has little operational value until management makes choices about
+              which outcomes matter, what level of improvement is expected,
+              which business areas are accountable and what financial or risk
+              boundaries apply. Strategic planning also has to connect to
+              financial planning; effective planning produces not just
+              aspirations but targets, resource allocations and budgets that
+              reflect those priorities.<sup class="cite"
+                ><a
+                  href="https://www.mckinsey.com/capabilities/strategy-and-corporate-finance/our-insights/how-to-improve-strategic-planning"
+                  target="_blank"
+                  rel="noopener"
+                  aria-label="Source 4"
+                  >[4]</a
+                ></sup
+              >
+            </p>
+
+            <figure class="source-figure wide">
+              <a
+                href="https://www.pmi.org/-/media/pmi/documents/public/pdf/certifications/standard-for-portfolio-management-third-edition.pdf"
+                target="_blank"
+                rel="noopener"
+              >
+                <img
+                  src="assets/pmi-develop-portfolio-strategic-plan.png"
+                  alt="PMI data flow diagram showing organisational strategy, existing portfolio information and enterprise factors feeding the development of the portfolio strategic plan"
+                />
+              </a>
+              <figcaption>
+                Develop Portfolio Strategic Plan: Data Flow Diagram, Figure
+                4-3.<sup class="cite"
+                  ><a
+                    href="https://www.pmi.org/-/media/pmi/documents/public/pdf/certifications/standard-for-portfolio-management-third-edition.pdf"
+                    target="_blank"
+                    rel="noopener"
+                    aria-label="Source 13"
+                    >[13]</a
+                  ></sup
+                >
+              </figcaption>
+            </figure>
+
+            <p>
+              For the service problem, leadership might begin with evidence
+              showing that average turnaround time is 12 days, processing cost
+              has risen, users increasingly expect digital access and the
+              current platform is approaching a technology constraint. Several
+              responses may be possible: redesign the existing process, automate
+              selected activities, build a new digital service, replace the
+              underlying platform, or combine these changes. Enterprise planning
+              does <strong>not</strong> choose a “Digital Service Project” yet.
+              It establishes the outcome the organisation is pursuing—for
+              example,
+              <strong
+                >reduce average turnaround time from 12 to 6 days while lowering
+                processing cost and maintaining required control standards
+                within three years</strong
+              >. An executive or business owner is accountable for that outcome,
+              measures and baselines are established, and broad funding, risk
+              and policy constraints are defined.
+            </p>
+            <p>
+              The result of enterprise planning is therefore a set of
+              <strong>strategic outcomes and operating boundaries</strong>: what
+              must change, how success will be measured, who owns the outcome,
+              the time horizon, and the constraints within which the
+              organisation is willing to invest. A PPMIS needs to preserve these
+              because every later portfolio, programme and project should be
+              able to trace its existence back to the enterprise outcome it is
+              intended to advance.
+            </p>
+          </section>
+
+          <section class="sec" id="portfolio-planning">
+            <h3 class="sec-t">Portfolio planning</h3>
+            <p>
+              Once enterprise objectives have been defined, the organisation
+              still cannot manage all possible investment as one enormous pool
+              of work. Portfolio planning creates a structure between enterprise
+              strategy and individual investment decisions. In Boles’ framework,
+              leadership divides management among logical business areas or
+              portfolios, determines the operating parameters for each, develops
+              a roadmap of the changes that need to occur and asks what capacity
+              is available to deliver them.<sup class="cite"
+                ><a
+                  href="https://www.pmi.org/learning/library/work-delivery-process-project-portfolio-management-6680"
+                  target="_blank"
+                  rel="noopener"
+                  aria-label="Source 1"
+                  >[1]</a
+                ></sup
+              >
+              A portfolio can be organised around a business area, capability,
+              customer group, geography, service or strategic outcome; the
+              grouping depends on how the organisation needs to structure and
+              control its investments. APM similarly describes portfolios as
+              collections of projects and programmes used to structure and
+              manage investments at organisational or functional level.<sup
+                class="cite"
+                ><a
+                  href="https://www.apm.org.uk/resources/what-is-project-management/what-is-portfolio-management/"
+                  target="_blank"
+                  rel="noopener"
+                  aria-label="Source 5"
+                  >[5]</a
+                ></sup
+              >
+            </p>
+            <p>
+              The first practical step is therefore to
+              <strong>define the portfolio boundary and mandate</strong>.
+              Management decides what the portfolio is responsible for, which
+              enterprise objectives it supports, who owns it, what decisions can
+              be made within it and what existing programmes, projects and
+              operational commitments already fall inside that boundary.
+              Different organisations structure this differently: a bank might
+              have Digital Channels, Risk and Regulatory Change portfolios; a
+              public body might organise portfolios around services, policy
+              outcomes or organisational capabilities. The important point is
+              that a portfolio is a <strong>management boundary</strong>, not
+              merely a folder containing projects.
+            </p>
+            <p>
+              The portfolio then needs a view of the change required to achieve
+              its objectives. Organisations commonly use
+              <strong>strategic roadmaps</strong> to represent this. A roadmap
+              is deliberately higher-level than a project schedule: it shows
+              outcomes, capabilities, major changes, dependencies and
+              approximate sequencing before every project has necessarily been
+              defined. Portfolio planning can also use
+              <strong>benefits maps or dependency networks</strong> to connect
+              desired strategic outcomes to the intermediate changes and
+              capabilities needed to produce them. Benefits mapping is useful
+              because it exposes relationships between investments rather than
+              allowing candidate projects to appear as isolated proposals. APM
+              identifies benefits mapping, dependency analysis, roadmapping and
+              what-if scenario modelling as useful portfolio-level
+              practices.<sup class="cite"
+                ><a
+                  href="https://www.apm.org.uk/blog/maximising-organisational-success-through-benefits-management-and-portfolio-prioritisation/"
+                  target="_blank"
+                  rel="noopener"
+                  aria-label="Source 6"
+                  >[6]</a
+                ></sup
+              >
+            </p>
+            <p>
+              The roadmap must then be tested against the organisation’s
+              <strong>investment envelope and capacity</strong>. Planning does
+              not mean assuming that every desired change can occur
+              simultaneously. Leadership can establish funding limits, target
+              investment categories, risk exposure, resource assumptions and
+              planning horizons for each portfolio. Resource allocation research
+              also shows why this matters: strategy only becomes executable when
+              capital, talent and other scarce resources are actually shifted
+              toward the areas the organisation has said are important.<sup
+                class="cite"
+                ><a
+                  href="https://www.mckinsey.com/capabilities/strategy-and-corporate-finance/our-insights/keep-calm-and-allocate-capital-six-process-improvements"
+                  target="_blank"
+                  rel="noopener"
+                  aria-label="Source 7"
+                  >[7]</a
+                ></sup
+              >
+            </p>
+
+            <figure class="source-figure wide">
+              <a
+                href="https://www.pmi.org/-/media/pmi/documents/public/pdf/certifications/standard-for-portfolio-management-third-edition.pdf"
+                target="_blank"
+                rel="noopener"
+              >
+                <img
+                  src="assets/pmi-develop-portfolio-management-plan.png"
+                  alt="PMI data flow diagram showing the strategic plan, charter and roadmap feeding the development of the portfolio management plan and its supporting management processes"
+                />
+              </a>
+              <figcaption>
+                Develop Portfolio Management Plan: Data Flow Diagram, Figure
+                5-3.<sup class="cite"
+                  ><a
+                    href="https://www.pmi.org/-/media/pmi/documents/public/pdf/certifications/standard-for-portfolio-management-third-edition.pdf"
+                    target="_blank"
+                    rel="noopener"
+                    aria-label="Source 13"
+                    >[13]</a
+                  ></sup
+                >
+              </figcaption>
+            </figure>
+
+            <p>
+              In the service example, the enterprise objective is assigned to a
+              <strong>Service Modernisation Portfolio</strong>. Portfolio
+              planning reveals that reducing turnaround time is not a single
+              change. The portfolio roadmap contains a platform upgrade already
+              under way, service-process redesign, data integration, control
+              changes and improvements to digital access. The proposed digital
+              service therefore enters an existing landscape of change rather
+              than an empty space. The roadmap might reveal that the digital
+              service depends on the platform upgrade, both require the same
+              architects, and operations can absorb only one major service
+              transition in a particular quarter. Those relationships now become
+              part of the context against which later investment requests will
+              be judged.
+            </p>
+            <p>
+              The output of portfolio planning is a
+              <strong>portfolio strategy and roadmap</strong>: its purpose,
+              owner, objectives, target outcomes, existing commitments,
+              dependencies, investment themes, funding envelope, capacity
+              assumptions and decision boundaries. The PPMIS must hold those
+              relationships so that a request arriving later can immediately be
+              assessed within the portfolio it affects rather than being
+              evaluated in isolation.
+            </p>
+          </section>
+
+          <section class="sec" id="portfolio-management">
+            <h3 class="sec-t">Portfolio management</h3>
+            <p>
+              Portfolio planning establishes the objectives, roadmap and limits;
+              portfolio management applies them to actual investment choices.
+              Boles describes this as the point where planning meets practice,
+              centred on a common intake of work, qualification of requests,
+              prioritisation and creation of a portfolio realisation plan.<sup
+                class="cite"
+                ><a
+                  href="https://www.pmi.org/learning/library/work-delivery-process-project-portfolio-management-6680"
+                  target="_blank"
+                  rel="noopener"
+                  aria-label="Source 1"
+                  >[1]</a
+                ></sup
+              >
+              APM similarly defines portfolio management as the
+              <strong>selection, prioritisation and control</strong> of projects
+              and programmes in line with strategic objectives and the
+              organisation’s capacity to deliver them.<sup class="cite"
+                ><a
+                  href="https://www.apm.org.uk/resources/what-is-project-management/what-is-portfolio-management/"
+                  target="_blank"
+                  rel="noopener"
+                  aria-label="Source 5"
+                  >[5]</a
+                ></sup
+              >
+            </p>
+
+            <figure class="source-figure wide">
+              <a
+                href="https://www.pmi.org/-/media/pmi/documents/public/pdf/certifications/standard-for-portfolio-management-third-edition.pdf"
+                target="_blank"
+                rel="noopener"
+              >
+                <img
+                  src="assets/pmi-process-group-interactions.png"
+                  alt="PMI portfolio management process group interactions linking strategy and work inventory to defining, aligning, authorising and controlling, projects, programmes and results"
+                />
+              </a>
+              <figcaption>
+                Portfolio Management Process Group Interactions, Figure 3-3.<sup
+                  class="cite"
+                  ><a
+                    href="https://www.pmi.org/-/media/pmi/documents/public/pdf/certifications/standard-for-portfolio-management-third-edition.pdf"
+                    target="_blank"
+                    rel="noopener"
+                    aria-label="Source 13"
+                    >[13]</a
+                  ></sup
+                >
+              </figcaption>
+            </figure>
+
+            <p>
+              The process usually begins with
+              <strong>demand or idea intake</strong>. Business areas submit
+              proposed work through a common route rather than immediately
+              creating projects. The initial record normally captures the
+              problem or opportunity, sponsor, expected outcome, strategic
+              alignment, indicative cost, timing, dependencies and initial
+              resource demand. Standardised intake matters because it creates
+              comparable information and makes it harder for projects to enter
+              the portfolio simply because an influential person has already
+              mobilised a team.
+            </p>
+            <p>
+              Requests that pass initial screening are then
+              <strong>qualified</strong>. Organisations may develop a business
+              case, options analysis, cost-benefit assessment, benefits profile,
+              risk assessment and preliminary resource estimate. Benefits are
+              especially important here because they provide a link back to
+              strategy: expected benefits can be mapped to organisational
+              objectives and assigned measures and owners before the work is
+              approved. PMI describes benefits realisation as beginning with
+              identifying expected benefits and aligning them with formal
+              strategy.<sup class="cite"
+                ><a
+                  href="https://www.pmi.org/learning/thought-leadership/series/benefits-realization/benefits-realization-management-framework"
+                  target="_blank"
+                  rel="noopener"
+                  aria-label="Source 8"
+                  >[8]</a
+                ></sup
+              >
+            </p>
+            <p>
+              Qualified demands can then be
+              <strong>compared and prioritised</strong>. Organisations use
+              combinations of weighted scoring models, mandatory criteria,
+              strategic alignment, financial return, risk, urgency, benefits,
+              dependencies and regulatory necessity. But scoring alone is
+              insufficient. Portfolio management also tests the proposed set of
+              work against
+              <strong>available money and delivery capacity</strong>. The
+              highest-scoring five projects may still be impossible to run
+              together if all five depend on the same scarce specialists.
+              Leading organisations therefore map resource demand against
+              prioritised work, identify capacity or capability gaps and adjust
+              the mix accordingly.<sup class="cite"
+                ><a
+                  href="https://www.mckinsey.com/capabilities/operations/our-insights/matching-the-right-projects-with-the-right-resources"
+                  target="_blank"
+                  rel="noopener"
+                  aria-label="Source 9"
+                  >[9]</a
+                ></sup
+              >
+              Portfolio management is ultimately an optimisation problem: which
+              feasible combination of work delivers the most value within the
+              organisation’s actual constraints?
+            </p>
+            <p>
+              This often requires <strong>scenario analysis</strong> rather than
+              one final ranking. Management might compare what happens if
+              funding is reduced, a mandatory initiative is introduced, a major
+              programme slips or a scarce resource becomes unavailable. The
+              result may be to approve one initiative, defer another, combine
+              related requests, accelerate an enabling project or stop existing
+              work whose expected value has fallen. Portfolio management is
+              continuous rather than annual because priorities, performance and
+              capacity change during the year; effective resource allocation
+              therefore includes mechanisms to revisit commitments and shift
+              resources when circumstances change.<sup class="cite"
+                ><a
+                  href="https://www.mckinsey.com/capabilities/strategy-and-corporate-finance/our-insights/keep-calm-and-allocate-capital-six-process-improvements"
+                  target="_blank"
+                  rel="noopener"
+                  aria-label="Source 10"
+                  >[10]</a
+                ></sup
+              >
+            </p>
+            <p>
+              In the service example, the digital-service request is formally
+              captured and its benefits, costs, dependencies and specialist
+              requirements are assessed. It scores highly against the
+              service-modernisation objective, but analysis shows that it
+              depends on the platform upgrade and both initiatives require the
+              same architecture team. Management therefore does not simply
+              approve the higher-scoring request. It brings the platform work
+              forward, sequences the digital service behind it and reserves the
+              relevant resources across both. If the budget later falls or the
+              platform programme slips, the roadmap can be reconsidered rather
+              than allowing the downstream project to continue against an
+              invalid assumption.
+            </p>
+            <p>
+              The PPMIS therefore needs to maintain the
+              <strong>entire decision history</strong>: request, sponsor,
+              business case, expected benefits, costs, resource demand,
+              dependencies, assessment scores, scenarios, priority, decision,
+              rationale, funding, conditions and position on the current
+              roadmap. This is what turns portfolio management from a periodic
+              spreadsheet exercise into an auditable management process.
+            </p>
+          </section>
+
+          <section class="sec" id="work-management">
+            <h3 class="sec-t">Work management</h3>
+            <p>
+              Once work is authorised, the organisation must decide
+              <strong>how it should be delivered</strong>. Boles describes work
+              management as the collection of delivery channels through which
+              different types of work proceed concurrently.<sup class="cite"
+                ><a
+                  href="https://www.pmi.org/learning/library/work-delivery-process-project-portfolio-management-6680"
+                  target="_blank"
+                  rel="noopener"
+                  aria-label="Source 1"
+                  >[1]</a
+                ></sup
+              >
+              This is important because an approved investment does not
+              automatically become one standalone project. The delivery
+              structure depends on the nature of the change, its complexity, the
+              outcomes required and its relationships with other work.
+            </p>
+            <p>
+              A bounded piece of temporary work with a defined output can be
+              established as a <strong>project</strong>. Where several projects
+              and change activities must be coordinated to achieve a common
+              outcome or set of benefits, organisations may establish a
+              <strong>programme</strong> instead. Programme management exists
+              precisely because individually successful projects can still fail
+              to produce the intended organisational outcome if their
+              dependencies, sequencing, shared resources and benefits are not
+              coordinated. PMI describes programmes as a way to optimise
+              schedules, staffing and interdependent projects around common
+              benefits; programme managers coordinate those relationships and
+              determine the appropriate pacing of the component projects.<sup
+                class="cite"
+                ><a
+                  href="https://www.pmi.org/learning/library/2019/04/07/15/41/new-pmi-standard-pm-8179"
+                  target="_blank"
+                  rel="noopener"
+                  aria-label="Source 11"
+                  >[11]</a
+                ></sup
+              >
+              Some authorised work may also be delivered through product/release
+              structures or through existing operational processes rather than
+              through a formal project at all.
+            </p>
+            <p>
+              Once the delivery structure is chosen, the mandate established
+              during portfolio management is decomposed into a more detailed
+              <strong>delivery baseline</strong>. Project and programme teams
+              define scope, outputs, milestones, schedules, resources, budgets,
+              risks, assumptions and dependencies. Programmes additionally
+              manage
+              <strong
+                >cross-project dependencies, programme-level benefits,
+                transition activities and shared milestones</strong
+              >. A programme roadmap can sequence component projects according
+              to the capabilities and benefits they enable rather than simply
+              arranging them by start date. PMI’s programme guidance explicitly
+              connects component sequencing, benefit milestones, resource
+              constraints and programme roadmaps.<sup class="cite"
+                ><a
+                  href="https://www.pmi.org/learning/library/earned-benefit-method-program-performance-6180"
+                  target="_blank"
+                  rel="noopener"
+                  aria-label="Source 12"
+                  >[12]</a
+                ></sup
+              >
+            </p>
+            <p>
+              Governance continues after authorisation. Many organisations use
+              <strong>stage or gateway reviews</strong> at significant decision
+              points. The delivery team provides evidence on progress, forecast
+              cost, risks, readiness and continued viability, while the sponsor
+              or governance body decides whether investment should continue,
+              whether scope or timing should change, or whether the work should
+              stop. This distinction matters in a PPMIS: the project manager
+              controls delivery within the approved mandate, while governance
+              retains the authority to change the investment decision.
+            </p>
+            <p>
+              Delivery information also has to move
+              <strong>back upward</strong>. A project delay can affect a
+              programme milestone; a programme delay can change benefits
+              forecasts; and those changes may make a different portfolio
+              investment more attractive. Work management therefore cannot be an
+              isolated scheduling module. Actual cost, forecasts, milestone
+              status, resource use, dependencies, changes, risks and expected
+              benefits must continuously update the portfolio view.
+            </p>
+
+            <figure class="source-figure wide">
+              <a
+                href="https://www.pmi.org/-/media/pmi/documents/public/pdf/certifications/standard-for-portfolio-management-third-edition.pdf"
+                target="_blank"
+                rel="noopener"
+              >
+                <img
+                  src="assets/pmi-portfolio-program-project-interactions.png"
+                  alt="PMI diagram showing management interactions among a portfolio, subportfolios, programmes, subprogrammes and projects"
+                />
+              </a>
+              <figcaption>
+                Portfolio, Program, and Project Management Interactions, Figure
+                1-2.<sup class="cite"
+                  ><a
+                    href="https://www.pmi.org/-/media/pmi/documents/public/pdf/certifications/standard-for-portfolio-management-third-edition.pdf"
+                    target="_blank"
+                    rel="noopener"
+                    aria-label="Source 13"
+                    >[13]</a
+                  ></sup
+                >
+              </figcaption>
+            </figure>
+
+            <p>
+              For the service example, analysis shows that the intended outcome
+              requires more than a digital front end. The organisation
+              establishes a <strong>Service Modernisation Programme</strong>
+              containing a platform-upgrade project, service-process redesign,
+              data integration, control implementation and adoption/change work.
+              Each project has its own outputs, budget and schedule, but the
+              programme manages the dependencies between them and retains
+              responsibility for the combined outcome. The digital-service
+              component cannot go live until platform capability and controls
+              are ready, while adoption work must continue beyond technical
+              deployment.
+            </p>
+            <p>
+              The PPMIS must therefore represent the
+              <strong
+                >relationships between portfolio, programme and project</strong
+              >, not simply provide separate project records. It needs to
+              preserve mandates, component structures, milestones, dependencies,
+              resources, costs, risks, decisions, changes, benefits and status
+              information while retaining the link to the portfolio decision
+              that authorised the investment.
+            </p>
+          </section>
+
+          <section class="sec" id="operations-management">
+            <h3 class="sec-t">Operations management</h3>
+            <p>
+              Operations management is different from the other four components
+              because it is not simply the final stage after project delivery.
+              In Boles’ Enterprise Management Framework it provides the
+              facilitating functions that support the other components, linking
+              governance, financial management, project and programme
+              management, capacity and resource management, maintenance and
+              ongoing support.<sup class="cite"
+                ><a
+                  href="https://www.pmi.org/learning/library/work-delivery-process-project-portfolio-management-6680"
+                  target="_blank"
+                  rel="noopener"
+                  aria-label="Source 1"
+                  >[1]</a
+                ></sup
+              >
+              It also becomes important at the other end of delivery because
+              programmes and projects eventually hand new capabilities into the
+              operational organisation that must use, support and sustain them.
+            </p>
+            <p>
+              One major operational function is
+              <strong>capacity management</strong>. Boles separates this into
+              <strong>resource planning</strong> and
+              <strong>resource management</strong>. Resource planning forecasts
+              future demand for skills, people, funding and other capacity;
+              resource management turns those forecasts into actual allocations
+              and commitments as delivery approaches. Crucially, the
+              organisation first has to provide enough capacity for ongoing
+              operational obligations—the work required to keep existing
+              services running. Only the remaining capacity is genuinely
+              available for discretionary project and programme work.<sup
+                class="cite"
+                ><a
+                  href="https://www.pmi.org/learning/library/work-delivery-process-project-portfolio-management-6680"
+                  target="_blank"
+                  rel="noopener"
+                  aria-label="Source 1"
+                  >[1]</a
+                ></sup
+              >
+              This is why portfolio approval cannot be separated from BAU
+              demand: allocating a specialist to a transformation programme may
+              mean removing that specialist from an operational responsibility
+              somewhere else.
+            </p>
+
+            <figure class="source-figure wide">
+              <a
+                href="https://www.pmi.org/-/media/pmi/documents/public/pdf/certifications/standard-for-portfolio-management-third-edition.pdf"
+                target="_blank"
+                rel="noopener"
+              >
+                <img
+                  src="assets/pmi-organizational-context.png"
+                  alt="PMI organisational context of portfolio management showing strategy flowing into portfolio management, ongoing operations, programmes and projects"
+                />
+              </a>
+              <figcaption>
+                The Organizational Context of Portfolio Management, Figure
+                1-3.<sup class="cite"
+                  ><a
+                    href="https://www.pmi.org/-/media/pmi/documents/public/pdf/certifications/standard-for-portfolio-management-third-edition.pdf"
+                    target="_blank"
+                    rel="noopener"
+                    aria-label="Source 13"
+                    >[13]</a
+                  ></sup
+                >
+              </figcaption>
+            </figure>
+
+            <p>
+              Finance and governance operate in a similar cross-cutting way.
+              Finance provides budgets, forecasts, actual expenditure and
+              investment controls across planning and delivery. Governance
+              establishes decision rights, policies, assurance requirements and
+              escalation routes. Operational managers provide information about
+              service constraints, maintenance windows and readiness for change.
+              Together, these functions prevent the project portfolio from being
+              planned as if the rest of the organisation does not exist.
+            </p>
+            <p>
+              Operations also becomes responsible for
+              <strong>transition and benefits sustainment</strong>. A project
+              can successfully deliver a system or process without the
+              organisation ever realising the benefit used to justify it.
+              Benefits-management practice therefore distinguishes between
+              delivering a capability and sustaining its value after it has
+              transitioned into the business. PMI’s Benefits Realization
+              Management framework explicitly covers identifying benefits,
+              delivering them during execution and
+              <strong
+                >sustaining them after the project has ended and the result has
+                transitioned to the business unit</strong
+              >.<sup class="cite"
+                ><a
+                  href="https://www.pmi.org/learning/thought-leadership/series/benefits-realization/benefits-realization-management-framework"
+                  target="_blank"
+                  rel="noopener"
+                  aria-label="Source 8"
+                  >[8]</a
+                ></sup
+              >
+              Operational owners need to accept the new capability, have support
+              and maintenance arrangements in place, monitor adoption and
+              performance, and continue measuring the business outcome.
+            </p>
+
+            <p>
+              For the service-modernisation programme, going live with the
+              digital service is therefore not the final measure of success.
+              Operations accepts the new service, provides support, monitors
+              transaction volumes, processing time, control failures and user
+              adoption, and compares actual performance with the original
+              objective. If average turnaround time falls only from 12 days to 9
+              rather than the targeted 6, the information becomes new evidence.
+              Management might change the operating process, initiate further
+              improvement work or reconsider the portfolio roadmap. Benefits and
+              operational performance therefore close the loop back into the
+              next planning cycle rather than disappearing when the project
+              record is closed.
+            </p>
+            <p>
+              The PPMIS needs to connect this operational information back to
+              the investment that created it:
+              <strong
+                >resource capacity and commitments, operational readiness,
+                handover and acceptance, support ownership, benefit owners,
+                baselines, targets, actual performance and lessons
+                learned</strong
+              >. That allows leadership to answer not only
+              <em>did we deliver the project?</em> but
+              <em
+                >did the organisation actually improve in the way that justified
+                the investment?</em
+              >
+            </p>
+          </section>
+        </main>
+
+        <nav class="toc" id="toc">
+          <h4>Contents</h4>
+          <div class="glabel">The problem</div>
+          <a href="#problem">Why portfolios matter</a>
+          <a href="#framework">Enterprise framework</a>
+          <div class="glabel">The five components</div>
+          <a href="#enterprise-planning">1 · Enterprise planning</a>
+          <a href="#portfolio-planning">2 · Portfolio planning</a>
+          <a href="#portfolio-management">3 · Portfolio management</a>
+          <a href="#work-management">4 · Work management</a>
+          <a href="#operations-management">5 · Operations management</a>
+          <div class="glabel">Next</div>
+          <a href="prototype.html">Prototype</a>
+        </nav>
+      </div>
+    </div>
+
+    <script>
+      (function () {
+        const links = [...document.querySelectorAll("#toc a[href^='#']")],
+          map = {};
+        links.forEach((a) => {
+          const el = document.getElementById(a.getAttribute("href").slice(1));
+          if (el) map[el.id] = a;
+        });
+        const obs = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (!entry.isIntersecting) return;
+              links.forEach((link) => link.classList.remove("active"));
+              if (map[entry.target.id])
+                map[entry.target.id].classList.add("active");
+            });
+          },
+          { rootMargin: "-15% 0px -75% 0px" },
+        );
+        Object.keys(map).forEach((id) =>
+          obs.observe(document.getElementById(id)),
+        );
+      })();
+    </script>
+    <script src="nav.js"></script>
+  </body>
+</html>

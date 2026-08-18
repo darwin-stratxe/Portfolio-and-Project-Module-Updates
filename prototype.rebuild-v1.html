@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>StratXE · PPMIS Prototype</title>
+    <style>
+      :root {
+        --nav: #183042;
+        --nav-deep: #122737;
+        --navy: #173b78;
+        --cyan: #2fb4e3;
+        --cyan-dark: #1e98c5;
+        --bg: #edf1f6;
+        --card: #fff;
+        --line: #d5dee8;
+        --line-soft: #e8edf2;
+        --ink: #34404e;
+        --text: #536071;
+        --muted: #8996a6;
+        --green: #27b365;
+        --amber: #efb019;
+        --red: #ef5d5a;
+        --purple: #7567de;
+        --shadow: 0 1px 3px rgba(16, 33, 55, 0.08);
+      }
+      * { box-sizing: border-box; }
+      html, body { margin: 0; min-height: 100%; font-family: Arial, Helvetica, sans-serif; background: var(--bg); color: var(--text); }
+      button, input, select, textarea { font: inherit; }
+      button { cursor: pointer; }
+      a { color: inherit; text-decoration: none; }
+      .app { display: flex; min-height: 100vh; }
+      .sidebar { width: 184px; flex: 0 0 184px; background: linear-gradient(180deg, var(--nav-deep), var(--nav)); color: #d7e5f0; display: flex; flex-direction: column; min-height: 100vh; }
+      .brand { height: 58px; display: flex; align-items: center; padding: 15px 18px; border-bottom: 1px solid rgba(255,255,255,.07); }
+      .brand img { width: 112px; height: auto; display: block; }
+      .side-scroll { padding: 8px 0 18px; }
+      .side-group { padding: 13px 15px 6px; font-size: 10px; color: #7f98ab; text-transform: uppercase; letter-spacing: .9px; font-weight: 700; }
+      .nav-item { width: 100%; border: 0; background: transparent; color: #a8bac9; display: flex; align-items: center; gap: 10px; padding: 9px 13px; text-align: left; font-size: 12.5px; font-weight: 700; border-left: 3px solid transparent; }
+      .nav-item:hover { color: #fff; background: rgba(255,255,255,.04); }
+      .nav-item.active { color: #fff; background: rgba(0,0,0,.2); border-left-color: var(--cyan); }
+      .nav-icon { width: 24px; height: 22px; display: grid; place-items: center; border: 1px solid rgba(255,255,255,.14); border-radius: 3px; font-size: 8px; letter-spacing: .2px; color: #8dd9f1; }
+      .side-foot { margin-top: auto; padding: 14px; border-top: 1px solid rgba(255,255,255,.07); }
+      .side-foot a { font-size: 11.5px; color: #9db1c4; }
+      .main { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+      .topbar { height: 38px; flex: 0 0 38px; background: #fff; border-bottom: 1px solid var(--line); display: flex; align-items: center; justify-content: space-between; padding: 0 18px; font-size: 11.5px; color: #6d7988; }
+      .topbar-left, .topbar-right, .role-person { display: flex; align-items: center; gap: 12px; }
+      .company-select, .role-select, .filter-select { border: 1px solid #cbd5df; background: #fff; color: #536173; border-radius: 3px; height: 29px; padding: 0 9px; }
+      .company-select { min-width: 210px; font-weight: 700; }
+      .role-select { min-width: 165px; }
+      .avatar { width: 26px; height: 26px; border-radius: 50%; background: #f3b74f; color: #fff; display: grid; place-items: center; font-size: 10px; font-weight: 800; }
+      .module-head { background: #fff; border-bottom: 1px solid var(--line); padding: 20px 25px 0; }
+      .head-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 18px; }
+      .head-title { display: flex; gap: 14px; align-items: center; }
+      .module-badge { width: 48px; height: 48px; border: 2px solid #cfe5ee; color: var(--cyan-dark); border-radius: 50%; display: grid; place-items: center; font-size: 20px; font-weight: 800; }
+      .eyebrow { color: #8e9aaa; font-size: 10px; text-transform: uppercase; letter-spacing: .8px; font-weight: 700; margin-bottom: 3px; }
+      h1 { margin: 0; color: #263d60; font-size: 26px; letter-spacing: -.35px; }
+      .subtitle { margin-top: 4px; color: #7b8999; font-size: 13px; }
+      .head-actions { display: flex; gap: 8px; }
+      .btn { height: 33px; border: 1px solid #ccd6e0; background: #fff; color: #58697d; border-radius: 4px; padding: 0 13px; font-weight: 700; font-size: 12px; }
+      .btn:hover { border-color: #9db6c9; }
+      .btn.primary { background: var(--cyan); color: #fff; border-color: var(--cyan); }
+      .btn.primary:hover { background: var(--cyan-dark); }
+      .btn.small { height: 28px; padding: 0 10px; font-size: 11px; }
+      .btn.danger { color: #c24643; }
+      .process-tabs { display: flex; gap: 26px; margin-top: 18px; }
+      .process-tab { border: 0; background: transparent; color: var(--navy); padding: 0 0 11px; font-weight: 700; font-size: 13px; position: relative; }
+      .process-tab.active { color: #349ff0; }
+      .process-tab.active::after { content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 3px; background: #58aff7; border-radius: 2px; }
+      .workspace { padding: 18px 24px 42px; }
+      .view-heading { margin: 0 0 12px; }
+      .view-heading h2 { margin: 0; color: #30445c; font-size: 19px; }
+      .view-heading p { margin: 4px 0 0; color: #8491a0; font-size: 12px; }
+      .module-subnav { display: flex; align-items: center; gap: 18px; min-height: 39px; margin-bottom: 14px; padding: 0 13px; background: #fff; border: 1px solid var(--line); border-radius: 4px; overflow-x: auto; }
+      .subnav-btn { align-self: stretch; border: 0; border-bottom: 2px solid transparent; background: transparent; color: #6b7888; padding: 0; font-size: 11.5px; font-weight: 700; white-space: nowrap; }
+      .subnav-btn.active { color: var(--cyan-dark); border-bottom-color: var(--cyan); }
+      .view-tools { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 13px; }
+      .view-tools-left, .view-tools-right { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+      .role-banner { border: 1px solid #cde3ef; border-left: 3px solid var(--cyan); background: #f3f9fc; padding: 10px 13px; font-size: 12.5px; color: #52758c; margin-bottom: 14px; }
+      .role-banner b { color: #2b5975; }
+      .grid { display: grid; gap: 14px; }
+      .grid-2 { grid-template-columns: minmax(0, 1.55fr) minmax(290px, .75fr); }
+      .grid-equal { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .grid-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+      .card { background: var(--card); border: 1px solid var(--line); border-radius: 4px; box-shadow: var(--shadow); min-width: 0; }
+      .card + .card { margin-top: 0; }
+      .card-head { min-height: 45px; padding: 12px 15px; border-bottom: 1px solid var(--line-soft); display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+      .card-head h2, .card-head h3 { margin: 0; color: #3b4858; font-size: 14px; }
+      .card-head small { color: var(--muted); font-size: 10.5px; }
+      .card-body { padding: 14px 15px; }
+      .card-body.flush { padding: 0; }
+      .kpi { background: #fff; border: 1px solid var(--line); border-radius: 4px; padding: 13px 14px; min-height: 92px; box-shadow: var(--shadow); }
+      .kpi-label { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .55px; font-weight: 700; }
+      .kpi-value { font-size: 26px; color: #29466d; font-weight: 800; margin-top: 6px; line-height: 1; }
+      .kpi-meta { font-size: 11px; margin-top: 7px; color: #8190a1; }
+      .up { color: var(--green); } .down { color: var(--red); }
+      .pill { display: inline-flex; align-items: center; gap: 5px; border-radius: 20px; padding: 3px 8px; font-size: 10px; font-weight: 800; white-space: nowrap; }
+      .pill.green { background: #e6f7ed; color: #228d50; }
+      .pill.amber { background: #fff2d9; color: #a77412; }
+      .pill.red { background: #fde8e7; color: #bd4743; }
+      .pill.blue { background: #e6f3fa; color: #277ca6; }
+      .pill.grey { background: #eef1f4; color: #697586; }
+      .pill.purple { background: #efecff; color: #6656c4; }
+      .dot { width: 7px; height: 7px; border-radius: 50%; background: currentColor; display: inline-block; }
+      table { width: 100%; border-collapse: collapse; font-size: 12px; }
+      th { background: #f5f7f9; color: #667484; text-align: left; text-transform: uppercase; letter-spacing: .38px; font-size: 9.5px; padding: 9px 11px; border-bottom: 1px solid var(--line); }
+      td { padding: 10px 11px; border-bottom: 1px solid var(--line-soft); vertical-align: middle; color: #556171; }
+      tr:last-child td { border-bottom: 0; }
+      tbody tr.clickable { cursor: pointer; }
+      tbody tr.clickable:hover td { background: #f8fbfd; }
+      .name { font-weight: 700; color: #334456; }
+      .sub { font-size: 10.5px; color: #929dab; margin-top: 2px; }
+      .num { font-variant-numeric: tabular-nums; }
+      .attention { display: flex; gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--line-soft); }
+      .attention:last-child { border-bottom: 0; }
+      .attention-mark { width: 28px; height: 28px; flex: 0 0 28px; border-radius: 50%; display: grid; place-items: center; background: #fff1dc; color: #ad7614; font-weight: 800; font-size: 11px; }
+      .attention-copy b { display: block; color: #3e4c5d; font-size: 12px; }
+      .attention-copy span { display: block; font-size: 10.5px; color: #8c98a7; margin-top: 3px; line-height: 1.4; }
+      .trace { display: grid; grid-template-columns: repeat(5, 1fr); align-items: stretch; gap: 16px; }
+      .trace-step { position: relative; padding: 11px; border-top: 3px solid #7ebbd7; background: #f7fafc; min-height: 90px; }
+      .trace-step:not(:last-child)::after { content: "›"; position: absolute; right: -12px; top: 34px; color: #9dacb9; font-size: 20px; }
+      .trace-step b { display: block; color: #34485c; font-size: 11px; }
+      .trace-step span { display: block; color: #8693a3; font-size: 9.5px; margin-top: 5px; line-height: 1.42; }
+      .process-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 14px; }
+      .process-card { border: 1px solid var(--line); border-top: 3px solid var(--cyan); background: #fff; padding: 12px; text-align: left; min-height: 84px; }
+      .process-card:nth-child(2) { border-top-color: var(--purple); }
+      .process-card:nth-child(3) { border-top-color: var(--amber); }
+      .process-card b { display: block; color: #35475a; font-size: 12px; }
+      .process-card span { display: block; color: var(--muted); font-size: 10.5px; line-height: 1.4; margin-top: 4px; }
+      .balance-row, .capacity-row { display: grid; grid-template-columns: 155px minmax(120px, 1fr) 80px; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--line-soft); font-size: 11.5px; }
+      .balance-row:last-child, .capacity-row:last-child { border-bottom: 0; }
+      .rail { height: 8px; background: #eef2f6; overflow: hidden; border-radius: 4px; }
+      .rail i { height: 100%; display: block; background: var(--cyan); border-radius: inherit; }
+      .rail i.green { background: var(--green); } .rail i.amber { background: var(--amber); } .rail i.red { background: var(--red); } .rail i.purple { background: var(--purple); }
+      .outcome { border: 1px solid var(--line); background: #fff; padding: 13px; }
+      .outcome-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }
+      .outcome h3 { margin: 0; color: #36495d; font-size: 13px; }
+      .outcome p { margin: 6px 0 10px; font-size: 11px; line-height: 1.5; color: #7d8998; }
+      .measure { font-size: 10.5px; border-top: 1px solid var(--line-soft); padding-top: 8px; display: flex; justify-content: space-between; gap: 12px; }
+      .measure b { color: #34495d; }
+      .stage-strip { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-bottom: 14px; }
+      .stage { border: 1px solid var(--line); background: #fff; padding: 11px; }
+      .stage strong { color: #29466d; font-size: 22px; display: block; }
+      .stage span { color: #8190a0; font-size: 10.5px; }
+      .score-controls { display: grid; gap: 9px; }
+      .score-control { display: grid; grid-template-columns: 145px 1fr 42px; gap: 9px; align-items: center; font-size: 11px; }
+      input[type="range"] { accent-color: var(--cyan); width: 100%; }
+      .scenario { border: 1px solid #ccd6df; background: #fff; color: #637285; height: 29px; padding: 0 10px; border-radius: 3px; font-size: 10.5px; font-weight: 700; }
+      .scenario.active { color: #fff; background: var(--navy); border-color: var(--navy); }
+      .timeline { overflow-x: auto; }
+      .timeline-grid { min-width: 850px; display: grid; grid-template-columns: 175px repeat(8, 1fr); border-top: 1px solid var(--line); border-left: 1px solid var(--line); }
+      .tl-cell { min-height: 34px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 8px; font-size: 10px; position: relative; }
+      .tl-head { background: #f5f7f9; color: #677586; font-weight: 700; text-align: center; min-height: 30px; }
+      .tl-name { color: #3c4b5c; font-weight: 700; background: #fbfcfd; }
+      .bar { position: absolute; top: 9px; height: 16px; border-radius: 2px; background: var(--cyan); color: #fff; font-size: 8.5px; line-height: 16px; padding-left: 6px; white-space: nowrap; overflow: hidden; z-index: 2; }
+      .bar.purple { background: var(--purple); } .bar.green { background: var(--green); } .bar.amber { background: var(--amber); } .bar.navy { background: var(--navy); }
+      .decision { display: grid; grid-template-columns: 1fr auto; gap: 12px; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--line-soft); }
+      .decision:last-child { border-bottom: 0; }
+      .decision b { display: block; color: #37485a; font-size: 12px; }
+      .decision span { display: block; margin-top: 3px; color: #8995a4; font-size: 10.5px; }
+      .decision-actions { display: flex; gap: 5px; }
+      .risk-matrix { display: grid; grid-template-columns: 26px repeat(5, 1fr); gap: 4px; align-items: stretch; }
+      .risk-cell { min-height: 46px; background: #e7f3eb; position: relative; border: 1px solid rgba(0,0,0,.03); }
+      .risk-cell.mid { background: #fff0c9; } .risk-cell.high { background: #f8d6d3; }
+      .risk-axis { display: grid; place-items: center; color: #93a0ae; font-size: 9px; }
+      .risk-chip { position: absolute; width: 21px; height: 21px; border-radius: 50%; background: #334e73; color: #fff; display: grid; place-items: center; font-size: 8px; font-weight: 800; }
+      .report-card { border: 1px solid var(--line); background: #fff; padding: 14px; min-height: 155px; display: flex; flex-direction: column; }
+      .report-icon { width: 34px; height: 34px; border-radius: 4px; background: #e8f4fa; color: #2485ae; display: grid; place-items: center; font-size: 10px; font-weight: 800; }
+      .report-card h3 { margin: 10px 0 5px; color: #37495c; font-size: 13px; }
+      .report-card p { margin: 0 0 12px; color: #8793a1; font-size: 10.5px; line-height: 1.45; }
+      .report-card .btn { margin-top: auto; align-self: flex-start; }
+      .empty { padding: 40px 20px; text-align: center; color: var(--muted); }
+      .drawer { position: fixed; top: 0; right: 0; bottom: 0; width: 410px; max-width: 92vw; background: #fff; border-left: 1px solid var(--line); box-shadow: -8px 0 28px rgba(26,45,65,.16); z-index: 40; transform: translateX(102%); transition: transform .2s ease; display: flex; flex-direction: column; }
+      .drawer.open { transform: translateX(0); }
+      .drawer-head { padding: 18px; border-bottom: 1px solid var(--line); display: flex; justify-content: space-between; gap: 12px; }
+      .drawer-head h2 { margin: 0; color: #31465d; font-size: 17px; }
+      .drawer-body { padding: 18px; overflow: auto; }
+      .kv { display: grid; grid-template-columns: 125px 1fr; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--line-soft); font-size: 11.5px; }
+      .kv span { color: var(--muted); } .kv b { color: #445264; font-weight: 700; }
+      .overlay { position: fixed; inset: 0; background: rgba(16,31,45,.42); z-index: 50; display: none; place-items: center; padding: 20px; }
+      .overlay.open { display: grid; }
+      .modal { width: 610px; max-width: 96vw; max-height: 90vh; overflow: auto; background: #fff; border-radius: 5px; box-shadow: 0 20px 60px rgba(0,0,0,.2); }
+      .modal-head, .modal-foot { padding: 15px 18px; border-bottom: 1px solid var(--line); display: flex; justify-content: space-between; align-items: center; }
+      .modal-head h2 { margin: 0; color: #31465d; font-size: 17px; }
+      .modal-body { padding: 18px; }
+      .modal-foot { border-top: 1px solid var(--line); border-bottom: 0; justify-content: flex-end; gap: 8px; }
+      .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 13px; }
+      .field.full { grid-column: 1 / -1; }
+      .field label { display: block; color: #536173; font-size: 11px; font-weight: 700; margin-bottom: 5px; }
+      .field input, .field select, .field textarea { width: 100%; border: 1px solid #cbd5df; border-radius: 3px; padding: 9px 10px; color: #536173; background: #fff; }
+      .field textarea { min-height: 75px; resize: vertical; }
+      .toast { position: fixed; right: 22px; bottom: 22px; background: #20394b; color: #fff; padding: 11px 15px; border-radius: 4px; font-size: 12px; box-shadow: 0 10px 30px rgba(0,0,0,.2); z-index: 80; opacity: 0; pointer-events: none; transform: translateY(8px); transition: .2s; }
+      .toast.show { opacity: 1; transform: translateY(0); }
+      .source-foot { margin-top: 18px; color: #9aa5b2; font-size: 9.5px; }
+      @media (max-width: 1120px) {
+        .grid-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        .grid-3 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        .grid-2 { grid-template-columns: 1fr; }
+        .trace { grid-template-columns: repeat(3, 1fr); }
+      }
+      @media (max-width: 760px) {
+        .sidebar { width: 64px; flex-basis: 64px; }
+        .brand { padding: 15px 9px; } .brand img { width: 46px; object-fit: cover; object-position: left; }
+        .side-group, .nav-item span, .side-foot { display: none; }
+        .nav-item { padding: 10px 17px; } .nav-icon { width: 24px; }
+        .company-select, .role-person span { display: none; }
+        .module-head { padding: 16px 15px 0; }
+        .head-actions { display: none; }
+        .workspace { padding: 14px; }
+        .grid-4, .grid-3, .grid-equal, .process-cards, .stage-strip { grid-template-columns: 1fr; }
+        .trace { grid-template-columns: 1fr; }
+        .trace-step:not(:last-child)::after { content: "⌄"; right: 50%; top: auto; bottom: -17px; }
+        .process-tabs { gap: 14px; overflow-x: auto; }
+        .view-tools { align-items: flex-start; flex-direction: column; }
+        .form-grid { grid-template-columns: 1fr; }
+        .field.full { grid-column: auto; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app">
+      <aside class="sidebar" aria-label="StratXE navigation">
+        <div class="brand"><img src="assets/StratXE_logo_new_white.png" alt="StratXE" /></div>
+        <div class="side-scroll">
+          <button class="nav-item" data-demo="Home is outside this Portfolio prototype."><i class="nav-icon">HM</i><span>Home</span></button>
+          <div class="side-group">Sector</div>
+          <button class="nav-item" data-demo="Sector Trends is a separate StratXE module."><i class="nav-icon">SE</i><span>Sector Trends</span></button>
+          <div class="side-group">Modules</div>
+          <button class="nav-item" data-demo="Strategic Plan supplies the enterprise outcomes used in Portfolio."><i class="nav-icon">SP</i><span>Strategic Plan</span></button>
+          <button class="nav-item" data-demo="APP is a separate StratXE module."><i class="nav-icon">AP</i><span>APP</span></button>
+          <button class="nav-item active"><i class="nav-icon">PF</i><span>Portfolio</span></button>
+          <button class="nav-item" data-demo="Structure is a separate StratXE module."><i class="nav-icon">ST</i><span>Structure</span></button>
+          <button class="nav-item" data-demo="AOP is a separate StratXE module."><i class="nav-icon">AO</i><span>AOP</span></button>
+          <button class="nav-item" data-demo="Performance is a separate StratXE module."><i class="nav-icon">PE</i><span>Performance</span></button>
+          <button class="nav-item" data-demo="Projects is a separate StratXE module."><i class="nav-icon">PJ</i><span>Projects</span></button>
+          <div class="side-group">Management</div>
+          <button class="nav-item" data-demo="The enterprise dashboard is outside this Portfolio prototype."><i class="nav-icon">DB</i><span>Dashboard</span></button>
+          <button class="nav-item" data-demo="Enterprise reports are outside this Portfolio prototype."><i class="nav-icon">RP</i><span>Reports</span></button>
+          <button class="nav-item" data-demo="Enterprise approvals are outside this Portfolio prototype."><i class="nav-icon">OK</i><span>Approvals</span></button>
+          <div class="side-group">Support</div>
+          <button class="nav-item" data-demo="Policies are outside this Portfolio prototype."><i class="nav-icon">PO</i><span>Policies</span></button>
+          <button class="nav-item" data-demo="Document management is outside this Portfolio prototype."><i class="nav-icon">DM</i><span>DMS</span></button>
+          <button class="nav-item" data-demo="Administration is outside this Portfolio prototype."><i class="nav-icon">AD</i><span>Admin</span></button>
+        </div>
+        <div class="side-foot"><a href="index.html">← Research note</a></div>
+      </aside>
+
+      <main class="main">
+        <div class="topbar">
+          <div class="topbar-left">
+            <select class="company-select" aria-label="Organisation">
+              <option>Enterprise Services Group</option>
+            </select>
+            <span>FY 2026/27</span>
+          </div>
+          <div class="topbar-right">
+            <label for="roleSelect">View as</label>
+            <select id="roleSelect" class="role-select" aria-label="Select role"></select>
+            <div class="role-person"><span id="personName"></span><div class="avatar" id="avatar"></div></div>
+          </div>
+        </div>
+
+        <header class="module-head">
+          <div class="head-row">
+            <div class="head-title">
+              <div class="module-badge">P</div>
+              <div>
+                <div class="eyebrow">Portfolio and Project Management Information System</div>
+                <h1>Portfolio</h1>
+                <div class="subtitle">Portfolio and programme investment management</div>
+              </div>
+            </div>
+            <div class="head-actions">
+              <button class="btn" data-action="review-pack">Review pack</button>
+              <button class="btn primary" data-action="new-request">New request</button>
+            </div>
+          </div>
+          <nav class="process-tabs" aria-label="Portfolio module areas">
+            <button class="process-tab active" data-section="overview" data-view="overview">Overview</button>
+            <button class="process-tab" data-section="planning" data-view="strategy">Portfolio planning</button>
+            <button class="process-tab" data-section="management" data-view="demand">Portfolio management</button>
+            <button class="process-tab" data-section="work" data-view="delivery">Work management</button>
+            <button class="process-tab" data-section="operations" data-view="resources">Operations management</button>
+          </nav>
+        </header>
+
+        <section class="workspace">
+          <div id="content" aria-live="polite"></div>
+          <div class="source-foot">Prototype process logic informed by PMI, <em>The Standard for Portfolio Management</em>, Third Edition.</div>
+        </section>
+      </main>
+    </div>
+
+    <aside class="drawer" id="drawer" aria-hidden="true">
+      <div class="drawer-head"><div><div class="eyebrow" id="drawerType">Record</div><h2 id="drawerTitle">Details</h2></div><button class="btn small" data-action="close-drawer">Close</button></div>
+      <div class="drawer-body" id="drawerBody"></div>
+    </aside>
+
+    <div class="overlay" id="requestModal" role="dialog" aria-modal="true" aria-labelledby="requestTitle">
+      <form class="modal" id="requestForm">
+        <div class="modal-head"><h2 id="requestTitle">New work request</h2><button type="button" class="btn small" data-action="close-modal">Close</button></div>
+        <div class="modal-body">
+          <div class="form-grid">
+            <div class="field full"><label for="requestName">Request name</label><input id="requestName" name="name" required placeholder="e.g. Digital identity verification" /></div>
+            <div class="field"><label for="requestOwner">Business owner</label><input id="requestOwner" name="owner" required placeholder="Name or business area" /></div>
+            <div class="field"><label for="requestPortfolio">Proposed portfolio</label><select id="requestPortfolio" name="portfolio"><option>Service Modernisation</option><option>Data and Analytics</option><option>Operational Resilience</option><option>Workforce Capability</option></select></div>
+            <div class="field"><label for="requestOutcome">Strategic outcome</label><select id="requestOutcome" name="outcome"><option>Faster, lower-cost services</option><option>Trusted enterprise information</option><option>Stable and secure operations</option><option>Critical skills and capability</option></select></div>
+            <div class="field"><label for="requestCost">Indicative cost</label><input id="requestCost" name="cost" placeholder="R million" inputmode="decimal" /></div>
+            <div class="field full"><label for="requestProblem">Problem or opportunity</label><textarea id="requestProblem" name="problem" required placeholder="Describe the need before proposing the solution."></textarea></div>
+            <div class="field full"><label for="requestBenefit">Expected benefit and measure</label><textarea id="requestBenefit" name="benefit" placeholder="What should improve, by how much, and who will own the result?"></textarea></div>
+          </div>
+        </div>
+        <div class="modal-foot"><button type="button" class="btn" data-action="close-modal">Cancel</button><button type="submit" class="btn primary">Submit for qualification</button></div>
+      </form>
+    </div>
+    <div class="toast" id="toast" role="status"></div>
+
+    <script>
+      const roles = {
+        executive: { label: "Executive sponsor", person: "Naledi Maseko", initials: "NM", landing: "overview", focus: "Enterprise outcomes, investment choices, exceptions and realised value." },
+        portfolio: { label: "Portfolio manager", person: "Lerato Molefe", initials: "LM", landing: "portfolio", focus: "Portfolio composition, prioritisation, capacity, dependencies and recommendations." },
+        programme: { label: "Programme manager", person: "Thabo Ndlovu", initials: "TN", landing: "delivery", focus: "Programme outcomes, component dependencies, benefits, milestones and escalations." },
+        project: { label: "Project manager", person: "Ayesha Patel", initials: "AP", landing: "delivery", focus: "Authorised scope, schedule, budget, resources, risks, changes and status reporting." },
+        resource: { label: "Resource manager", person: "Michael Dube", initials: "MD", landing: "resources", focus: "Demand, available capacity, allocations, skills constraints and resource scenarios." },
+        pmo: { label: "PMO / governance", person: "Hannah Okonjo", initials: "HO", landing: "governance", focus: "Data quality, process compliance, review preparation, decisions and audit history." }
+      };
+      const portfolios = [
+        { id:"PF-01", name:"Service Modernisation", owner:"Lerato Molefe", outcome:"Faster, lower-cost services", budget:620, forecast:604, capacity:91, health:"Amber", components:18, benefits:74, decision:"Rebalance specialist capacity" },
+        { id:"PF-02", name:"Data and Analytics", owner:"Siyanda Khumalo", outcome:"Trusted enterprise information", budget:410, forecast:398, capacity:82, health:"Green", components:13, benefits:88, decision:"Approve data-quality tranche" },
+        { id:"PF-03", name:"Operational Resilience", owner:"Megan Jacobs", outcome:"Stable and secure operations", budget:525, forecast:551, capacity:96, health:"Red", components:16, benefits:63, decision:"Resolve funding pressure" },
+        { id:"PF-04", name:"Workforce Capability", owner:"Bongani Dlamini", outcome:"Critical skills and capability", budget:285, forecast:271, capacity:69, health:"Green", components:9, benefits:81, decision:"Confirm next intake" }
+      ];
+      const requests = [
+        { id:"REQ-241", name:"Digital identity verification", portfolio:"Service Modernisation", owner:"Customer Services", stage:"Governance review", score:86, cost:74, outcome:"Faster, lower-cost services", dependency:"Enterprise identity platform", status:"Amber" },
+        { id:"REQ-238", name:"Records classification automation", portfolio:"Data and Analytics", owner:"Information Management", stage:"Scoring", score:79, cost:38, outcome:"Trusted enterprise information", dependency:"Data governance standard", status:"Green" },
+        { id:"REQ-236", name:"Secondary recovery environment", portfolio:"Operational Resilience", owner:"Technology Operations", stage:"Qualified", score:91, cost:126, outcome:"Stable and secure operations", dependency:"Cloud landing zone", status:"Red" },
+        { id:"REQ-233", name:"Specialist graduate pathway", portfolio:"Workforce Capability", owner:"People Management", stage:"Submitted", score:68, cost:21, outcome:"Critical skills and capability", dependency:"Workforce plan", status:"Green" },
+        { id:"REQ-229", name:"Service notification platform", portfolio:"Service Modernisation", owner:"Digital Channels", stage:"Governance review", score:82, cost:47, outcome:"Faster, lower-cost services", dependency:"Customer data integration", status:"Amber" }
+      ];
+      const delivery = [
+        { id:"PGM-014", type:"Programme", name:"Service Modernisation Programme", portfolio:"Service Modernisation", manager:"Thabo Ndlovu", progress:61, budget:318, forecast:326, health:"Amber", next:"Benefits gateway", date:"18 Sep 2026", outcome:"Reduce service turnaround time" },
+        { id:"PRJ-087", type:"Project", name:"Digital service channel", portfolio:"Service Modernisation", manager:"Ayesha Patel", progress:56, budget:82, forecast:86, health:"Amber", next:"Design approval", date:"29 Aug 2026", outcome:"Increase digital completion" },
+        { id:"PRJ-073", type:"Project", name:"Core platform upgrade", portfolio:"Service Modernisation", manager:"Daniel Naidoo", progress:72, budget:121, forecast:119, health:"Green", next:"Release readiness", date:"11 Sep 2026", outcome:"Increase platform capacity" },
+        { id:"PRJ-092", type:"Project", name:"Data integration layer", portfolio:"Data and Analytics", manager:"Karabo Mokoena", progress:39, budget:67, forecast:70, health:"Amber", next:"Architecture review", date:"04 Sep 2026", outcome:"Trusted shared data" },
+        { id:"PGM-009", type:"Programme", name:"Operational Resilience Programme", portfolio:"Operational Resilience", manager:"Megan Jacobs", progress:48, budget:285, forecast:307, health:"Red", next:"Recovery decision", date:"26 Aug 2026", outcome:"Protect critical services" }
+      ];
+      const risks = [
+        { id:"R-104", name:"Enterprise architecture capacity", portfolio:"Service Modernisation", score:20, owner:"Technology Office", response:"Reallocate two architects from lower-priority work", trend:"Worsening" },
+        { id:"R-098", name:"Recovery environment funding gap", portfolio:"Operational Resilience", score:20, owner:"CFO Office", response:"Decision required at investment committee", trend:"Worsening" },
+        { id:"R-091", name:"Customer data dependency", portfolio:"Data and Analytics", score:16, owner:"Chief Data Office", response:"Sequence integration after data-quality release", trend:"Stable" },
+        { id:"R-086", name:"Operational readiness window", portfolio:"Service Modernisation", score:12, owner:"Service Operations", response:"Move transition to low-volume period", trend:"Improving" }
+      ];
+      const decisions = [
+        { id:"DEC-061", name:"Digital identity verification", ask:"Authorize proposal development and R4.2m discovery funding", body:"Investment Committee", date:"21 Aug", status:"Pending" },
+        { id:"DEC-059", name:"Service Modernisation capacity", ask:"Move two enterprise architects from reporting consolidation", body:"Portfolio Governance Forum", date:"21 Aug", status:"Pending" },
+        { id:"DEC-057", name:"Recovery environment", ask:"Approve R26m funding increase or defer phase two", body:"Investment Committee", date:"28 Aug", status:"Pending" }
+      ];
+      const outcomes = [
+        { id:"SO-01", name:"Faster, lower-cost services", owner:"Chief Operating Officer", target:"Turnaround time: 12 → 6 days", actual:"8.7 days", health:"Amber", investments:18 },
+        { id:"SO-02", name:"Trusted enterprise information", owner:"Chief Data Officer", target:"Critical data quality: 95%", actual:"91%", health:"Amber", investments:13 },
+        { id:"SO-03", name:"Stable and secure operations", owner:"Chief Technology Officer", target:"Critical availability: 99.95%", actual:"99.91%", health:"Red", investments:16 },
+        { id:"SO-04", name:"Critical skills and capability", owner:"Chief People Officer", target:"Priority roles filled: 90%", actual:"86%", health:"Green", investments:9 }
+      ];
+      const capacity = [
+        { skill:"Enterprise architecture", supply:24, committed:22, demand:29, gap:-5 },
+        { skill:"Business analysis", supply:47, committed:39, demand:44, gap:3 },
+        { skill:"Solution engineering", supply:62, committed:58, demand:69, gap:-7 },
+        { skill:"Change management", supply:29, committed:19, demand:26, gap:3 },
+        { skill:"Cybersecurity", supply:18, committed:17, demand:23, gap:-5 }
+      ];
+      const viewMeta = {
+        overview:["Portfolio overview","Strategy, investment, delivery and value in one management view"],
+        strategy:["Strategic alignment","Use enterprise outcomes from Strategic Plan to set portfolio boundaries and measures"],
+        demand:["Work requests","Capture and qualify proposed work before creating a project or programme"],
+        prioritise:["Evaluate and prioritise","Compare qualified requests using agreed criteria, capacity and risk"],
+        roadmap:["Portfolio roadmap","Sequence authorised and proposed work against dependencies and decision windows"],
+        portfolio:["Portfolio mix","Manage the selected mix of programmes, projects and operational work"],
+        delivery:["Programmes and projects","Follow authorised work, dependencies, forecasts and delivery exceptions"],
+        resources:["Capacity and resources","Match portfolio demand to available people and critical capabilities"],
+        governance:["Decisions and oversight","Authorize work, record decisions and provide continuing oversight"],
+        performance:["Benefits and operational value","Compare expected value with operational results after delivery"],
+        risks:["Risks and issues","Manage threats and opportunities that affect multiple investments"],
+        reports:["Portfolio reports","Provide consistent information for each stakeholder and decision cycle"]
+      };
+      const sectionForView = {
+        overview:"overview", reports:"overview",
+        strategy:"planning", roadmap:"planning",
+        demand:"management", prioritise:"management", portfolio:"management", governance:"management", risks:"management",
+        delivery:"work",
+        resources:"operations", performance:"operations"
+      };
+      const sectionNav = {
+        overview:[["Portfolio overview","overview"],["Portfolio reports","reports"]],
+        planning:[["Strategic alignment","strategy"],["Portfolio roadmap","roadmap"]],
+        management:[["Work requests","demand"],["Evaluate & prioritise","prioritise"],["Portfolio mix","portfolio"],["Decisions & oversight","governance"],["Risks & issues","risks"]],
+        work:[["Programmes & projects","delivery"]],
+        operations:[["Capacity & resources","resources"],["Benefits & operational value","performance"]]
+      };
+      const state = { view:"overview", role:"portfolio", scenario:"current", weights:{strategy:35,value:25,risk:15,urgency:15,capacity:10} };
+      const content = document.getElementById("content");
+      const money = n => "R" + n.toLocaleString() + "m";
+      const pill = s => '<span class="pill ' + ({Green:"green",Amber:"amber",Red:"red",Pending:"amber",Authorized:"green",Deferred:"grey",Qualified:"blue",Submitted:"grey",Scoring:"purple","Governance review":"amber"}[s] || "blue") + '"><i class="dot"></i>' + s + "</span>";
+      const roleBanner = () => '<div class="role-banner"><b>' + roles[state.role].label + ' view:</b> ' + roles[state.role].focus + '</div>';
+      const localNav = () => {
+        const section=sectionForView[state.view];
+        return '<nav class="module-subnav" aria-label="'+section+' views">'+sectionNav[section].map(item=>'<button class="subnav-btn '+(item[1]===state.view?'active':'')+'" data-view="'+item[1]+'">'+item[0]+'</button>').join('')+'</nav>';
+      };
+      const tools = (extra="") => '<div class="view-tools"><div class="view-tools-left"><select class="filter-select" id="portfolioFilter"><option>All portfolios</option>' + portfolios.map(p=>'<option>'+p.name+'</option>').join("") + '</select><select class="filter-select"><option>Current approved baseline</option><option>Proposed scenario</option></select></div><div class="view-tools-right">'+extra+'</div></div>';
+      function kpis(items){ return '<div class="grid grid-4">' + items.map(i=>'<div class="kpi"><div class="kpi-label">'+i[0]+'</div><div class="kpi-value">'+i[1]+'</div><div class="kpi-meta">'+i[2]+'</div></div>').join("") + '</div>'; }
+      function overview(){
+        return tools('<button class="btn small" data-view="reports">Open reports</button>') + roleBanner() +
+          kpis([["Approved investment","R1.84bn","56 active programmes and projects"],["Forecast position","R1.82bn","<span class='up'>R18m within approved funding</span>"],["Capacity committed","86%","<span class='down'>Three critical skill constraints</span>"],["Benefits on track","76%","R148m realised in the current year"]]) +
+          '<div style="height:14px"></div><div class="process-cards">' +
+          '<button class="process-card" data-view="strategy"><b>Define</b><span>Strategic plan, portfolio charter, roadmap and management plans.</span></button>' +
+          '<button class="process-card" data-view="prioritise"><b>Align</b><span>Identify, categorise, score, rank and balance portfolio components.</span></button>' +
+          '<button class="process-card" data-view="governance"><b>Authorize &amp; control</b><span>Allocate resources, record decisions and monitor continued alignment.</span></button></div>' +
+          '<div class="grid grid-2"><section class="card"><div class="card-head"><h2>Portfolio position</h2><small>Current approved baseline</small></div><div class="card-body flush"><table><thead><tr><th>Portfolio</th><th>Investment</th><th>Capacity</th><th>Benefits</th><th>Health</th></tr></thead><tbody>' +
+          portfolios.map(p=>'<tr class="clickable" data-record="portfolio" data-id="'+p.id+'"><td><div class="name">'+p.name+'</div><div class="sub">'+p.outcome+'</div></td><td class="num">'+money(p.forecast)+'</td><td>'+p.capacity+'%</td><td>'+p.benefits+'%</td><td>'+pill(p.health)+'</td></tr>').join("") +
+          '</tbody></table></div></section><section class="card"><div class="card-head"><h2>Management attention</h2><small>Next 14 days</small></div><div class="card-body">' +
+          '<div class="attention"><div class="attention-mark">3</div><div class="attention-copy"><b>Governance decisions are due</b><span>Funding, capacity and proposal authorization require a recorded decision.</span></div></div>' +
+          '<div class="attention"><div class="attention-mark">5</div><div class="attention-copy"><b>Critical resource gaps</b><span>Architecture, engineering and cybersecurity demand exceed available capacity.</span></div></div>' +
+          '<div class="attention"><div class="attention-mark">2</div><div class="attention-copy"><b>Benefits are below forecast</b><span>Operational adoption is delaying value in two programmes.</span></div></div></div></section></div>' +
+          '<div style="height:14px"></div><section class="card"><div class="card-head"><h2>Traceability from outcome to value</h2><small>Selected investment thread</small></div><div class="card-body"><div class="trace">' +
+          '<div class="trace-step"><b>Enterprise outcome</b><span>Reduce service turnaround time from 12 to 6 days.</span></div><div class="trace-step"><b>Portfolio choice</b><span>Service Modernisation receives R620m investment envelope.</span></div><div class="trace-step"><b>Authorised programme</b><span>Service Modernisation Programme coordinates five components.</span></div><div class="trace-step"><b>Delivery</b><span>Platform, process, digital channel, data and adoption work.</span></div><div class="trace-step"><b>Operational value</b><span>Current turnaround time is 8.7 days; target remains 6.</span></div></div></div></section>';
+      }
+      function strategy(){
+        return tools('<button class="btn small" data-demo="Planning-cycle settings opened.">Manage planning cycle</button>') + roleBanner() +
+          '<div class="grid grid-4">' + outcomes.map(o=>'<article class="outcome clickable" data-record="outcome" data-id="'+o.id+'"><div class="outcome-top"><h3>'+o.name+'</h3>'+pill(o.health)+'</div><p>'+o.owner+' · '+o.investments+' linked investments</p><div class="measure"><span>'+o.target+'</span><b>'+o.actual+'</b></div></article>').join("") + '</div>' +
+          '<div style="height:14px"></div><div class="grid grid-2"><section class="card"><div class="card-head"><h2>Planning inputs and boundaries</h2><small>Portfolio strategic plan</small></div><div class="card-body"><div class="balance-row"><span>Organisational strategy</span><div class="rail"><i style="width:100%"></i></div><b>4 outcomes</b></div><div class="balance-row"><span>Inventory of work</span><div class="rail"><i class="purple" style="width:92%"></i></div><b>68 items</b></div><div class="balance-row"><span>Investment envelope</span><div class="rail"><i class="green" style="width:84%"></i></div><b>R1.84bn</b></div><div class="balance-row"><span>Risk tolerance</span><div class="rail"><i class="amber" style="width:58%"></i></div><b>Moderate</b></div><div class="balance-row"><span>Critical capacity</span><div class="rail"><i class="red" style="width:93%"></i></div><b>Constrained</b></div></div></section>' +
+          '<section class="card"><div class="card-head"><h2>Strategic change watch</h2><small>Inputs requiring assessment</small></div><div class="card-body"><div class="attention"><div class="attention-mark">!</div><div class="attention-copy"><b>Funding baseline revised</b><span>Operating cost pressure may reduce the discretionary envelope by R90m.</span></div></div><div class="attention"><div class="attention-mark">!</div><div class="attention-copy"><b>Service standard increased</b><span>Two portfolio targets require recalculation before the next review.</span></div></div><div class="attention"><div class="attention-mark">!</div><div class="attention-copy"><b>Technology dependency moved</b><span>Identity-platform completion is forecast six weeks later than the roadmap.</span></div></div></div></section></div>';
+      }
+      function demand(){
+        const counts = ["Submitted","Qualified","Scoring","Governance review","Authorized"].map(s=>[s, requests.filter(r=>r.stage===s).length]);
+        return tools('<button class="btn primary small" data-action="new-request">New request</button>') + roleBanner() +
+          '<div class="stage-strip">'+counts.map(c=>'<div class="stage"><strong>'+c[1]+'</strong><span>'+c[0]+'</span></div>').join("")+'</div>' +
+          '<section class="card"><div class="card-head"><h2>Work requests</h2><small>Common intake before project creation</small></div><div class="card-body flush"><table><thead><tr><th>Request</th><th>Portfolio</th><th>Stage</th><th>Indicative cost</th><th>Score</th><th>Dependency</th></tr></thead><tbody>' +
+          requests.map(r=>'<tr class="clickable" data-record="request" data-id="'+r.id+'"><td><div class="name">'+r.name+'</div><div class="sub">'+r.id+' · '+r.owner+'</div></td><td>'+r.portfolio+'</td><td>'+pill(r.stage)+'</td><td>'+money(r.cost)+'</td><td><b>'+r.score+'</b></td><td>'+r.dependency+'</td></tr>').join("")+'</tbody></table></div></section>';
+      }
+      function scoreFor(r){
+        const base={strategy:r.score,value:r.score-5,risk:r.status==="Red"?55:r.status==="Amber"?72:84,urgency:r.id==="REQ-236"?96:78,capacity:r.portfolio==="Workforce Capability"?88:62};
+        return Math.round(Object.keys(state.weights).reduce((n,k)=>n+base[k]*state.weights[k]/100,0));
+      }
+      function prioritise(){
+        const ranked=[...requests].sort((a,b)=>scoreFor(b)-scoreFor(a));
+        return tools('<div><button class="scenario '+(state.scenario==="current"?"active":"")+'" data-scenario="current">Current</button> <button class="scenario '+(state.scenario==="protection"?"active":"")+'" data-scenario="protection">Service protection</button> <button class="scenario '+(state.scenario==="digital"?"active":"")+'" data-scenario="digital">Digital acceleration</button></div>') + roleBanner() +
+          '<div class="grid grid-2"><section class="card"><div class="card-head"><h2>Weighted criteria</h2><small>Total 100%</small></div><div class="card-body"><div class="score-controls">' +
+          Object.entries(state.weights).map(([k,v])=>'<label class="score-control"><span>'+({strategy:"Strategic alignment",value:"Expected value",risk:"Risk and obligation",urgency:"Urgency",capacity:"Capacity fit"}[k])+'</span><input type="range" min="0" max="50" value="'+v+'" data-weight="'+k+'"><b>'+v+'%</b></label>').join("") +
+          '</div></div></section><section class="card"><div class="card-head"><h2>Scenario effect</h2><small>Decision support, not automatic approval</small></div><div class="card-body"><div class="attention"><div class="attention-mark">1</div><div class="attention-copy"><b>'+ranked[0].name+'</b><span>Highest combined score after strategy, value, risk, urgency and capacity are considered.</span></div></div><div class="attention"><div class="attention-mark">R</div><div class="attention-copy"><b>R'+ranked.reduce((n,r)=>n+r.cost,0)+'m requested</b><span>Only R190m remains in the current planning envelope; trade-offs are required.</span></div></div></div></section></div>' +
+          '<div style="height:14px"></div><section class="card"><div class="card-head"><h2>Ranked qualified work</h2><small>Governance retains the final decision</small></div><div class="card-body flush"><table><thead><tr><th>Rank</th><th>Request</th><th>Portfolio</th><th>Score</th><th>Capacity fit</th><th>Recommendation</th></tr></thead><tbody>' +
+          ranked.map((r,i)=>'<tr class="clickable" data-record="request" data-id="'+r.id+'"><td><b>'+(i+1)+'</b></td><td><div class="name">'+r.name+'</div><div class="sub">'+r.outcome+'</div></td><td>'+r.portfolio+'</td><td><b>'+scoreFor(r)+'</b></td><td>'+pill(r.status)+'</td><td>'+(i<2?pill("Qualified"):'Hold for capacity')+'</td></tr>').join("")+'</tbody></table></div></section>';
+      }
+      function roadmap(){
+        const rows=[
+          ["Service Modernisation Programme",1,7,"cyan"],["Core platform upgrade",1,3,"navy"],["Digital service channel",2,5,"purple"],["Data integration layer",3,6,"green"],["Operational Resilience Programme",1,8,"amber"],["Recovery environment",4,8,"navy"]
+        ];
+        let html='<div class="timeline-grid"><div class="tl-cell tl-head">Portfolio component</div>'+["Q1 26","Q2 26","Q3 26","Q4 26","Q1 27","Q2 27","Q3 27","Q4 27"].map(q=>'<div class="tl-cell tl-head">'+q+'</div>').join("");
+        rows.forEach(r=>{html+='<div class="tl-cell tl-name">'+r[0]+'</div>';for(let q=1;q<=8;q++){html+='<div class="tl-cell">'+(q===r[1]?'<div class="bar '+r[3]+'" style="width:calc('+((r[2]-r[1]+1)*100)+'% + '+((r[2]-r[1])*1)+'px)">'+r[0]+'</div>':"")+'</div>';}});
+        html+='</div>';
+        return tools('<button class="btn small" data-demo="Baseline comparison opened.">Compare baseline</button>')+roleBanner()+'<section class="card"><div class="card-head"><h2>Integrated portfolio roadmap</h2><small>Components, dependencies and decision points</small></div><div class="card-body"><div class="timeline">'+html+'</div></div></section><div style="height:14px"></div><div class="grid grid-equal"><section class="card"><div class="card-head"><h2>Dependency watch</h2></div><div class="card-body"><div class="attention"><div class="attention-mark">D1</div><div class="attention-copy"><b>Identity platform → digital service channel</b><span>Six-week movement affects testing and service-transition windows.</span></div></div><div class="attention"><div class="attention-mark">D2</div><div class="attention-copy"><b>Data governance → integration layer</b><span>Architecture gate cannot close until classification rules are approved.</span></div></div></div></section><section class="card"><div class="card-head"><h2>Upcoming milestones</h2></div><div class="card-body"><div class="decision"><div><b>Design approval</b><span>Digital service channel · 29 Aug</span></div>'+pill("Amber")+'</div><div class="decision"><div><b>Architecture review</b><span>Data integration layer · 04 Sep</span></div>'+pill("Green")+'</div><div class="decision"><div><b>Release readiness</b><span>Core platform upgrade · 11 Sep</span></div>'+pill("Green")+'</div></div></section></div>';
+      }
+      function portfolio(){
+        return tools('<button class="btn small" data-view="prioritise">Rebalance portfolio</button>')+roleBanner()+
+          kpis([["Portfolio components","68","56 active · 12 proposed"],["Approved funding","R1.84bn","Across four enterprise portfolios"],["Funding variance","-R18m","<span class='up'>Inside approved envelope</span>"],["High exposure","2","Investments require intervention"]])+
+          '<div style="height:14px"></div><section class="card"><div class="card-head"><h2>Portfolio inventory</h2><small>Programmes, projects and operational work</small></div><div class="card-body flush"><table><thead><tr><th>Portfolio</th><th>Owner</th><th>Components</th><th>Approved</th><th>Forecast</th><th>Capacity</th><th>Health</th><th>Next decision</th></tr></thead><tbody>'+portfolios.map(p=>'<tr class="clickable" data-record="portfolio" data-id="'+p.id+'"><td><div class="name">'+p.name+'</div><div class="sub">'+p.id+' · '+p.outcome+'</div></td><td>'+p.owner+'</td><td>'+p.components+'</td><td>'+money(p.budget)+'</td><td>'+money(p.forecast)+'</td><td>'+p.capacity+'%</td><td>'+pill(p.health)+'</td><td>'+p.decision+'</td></tr>').join("")+'</tbody></table></div></section>';
+      }
+      function deliveryView(){
+        let rows=delivery;
+        let note="All authorised programmes and projects";
+        if(state.role==="project"){rows=delivery.filter(d=>d.manager==="Ayesha Patel");note="Projects assigned to Ayesha Patel";}
+        if(state.role==="programme"){rows=delivery.filter(d=>d.name.includes("Service Modernisation")||d.portfolio==="Service Modernisation");note="Service Modernisation Programme and components";}
+        return tools('<button class="btn small" data-action="status-update">Submit status</button>')+roleBanner()+
+          '<div class="grid grid-4">'+[
+            ["Active work",rows.length,note],["Milestones due","7","Next 30 days"],["Forecast variance","R12m","Across visible work"],["Open escalations","3","Two require portfolio action"]
+          ].map(i=>'<div class="kpi"><div class="kpi-label">'+i[0]+'</div><div class="kpi-value">'+i[1]+'</div><div class="kpi-meta">'+i[2]+'</div></div>').join("")+'</div><div style="height:14px"></div>'+
+          '<section class="card"><div class="card-head"><h2>'+note+'</h2><small>Latest approved status</small></div><div class="card-body flush"><table><thead><tr><th>Programme / project</th><th>Manager</th><th>Progress</th><th>Budget</th><th>Forecast</th><th>Next control point</th><th>Health</th></tr></thead><tbody>'+rows.map(d=>'<tr class="clickable" data-record="delivery" data-id="'+d.id+'"><td><div class="name">'+d.name+'</div><div class="sub">'+d.id+' · '+d.type+' · '+d.portfolio+'</div></td><td>'+d.manager+'</td><td><div class="rail"><i class="'+(d.health==="Red"?"red":d.health==="Amber"?"amber":"green")+'" style="width:'+d.progress+'%"></i></div><div class="sub">'+d.progress+'%</div></td><td>'+money(d.budget)+'</td><td>'+money(d.forecast)+'</td><td>'+d.next+'<div class="sub">'+d.date+'</div></td><td>'+pill(d.health)+'</td></tr>').join("")+'</tbody></table></div></section>';
+      }
+      function resources(){
+        return tools('<button class="btn small" data-demo="Capacity scenario opened with the current portfolio demand.">Run capacity scenario</button>')+roleBanner()+
+          kpis([["People capacity","180 FTE","Across priority delivery skills"],["Committed","155 FTE","86% of available capacity"],["Unmet demand","17 FTE","Across three critical capabilities"],["Proposed demand","24 FTE","Not yet authorised"]])+
+          '<div style="height:14px"></div><div class="grid grid-2"><section class="card"><div class="card-head"><h2>Supply and demand</h2><small>Current quarter</small></div><div class="card-body">'+capacity.map(c=>'<div class="capacity-row"><span class="name">'+c.skill+'</span><div><div class="rail"><i class="'+(c.gap<0?"red":"green")+'" style="width:'+Math.min(100,c.demand/c.supply*75)+'%"></i></div><div class="sub">'+c.committed+' committed · '+c.demand+' demanded</div></div><b class="'+(c.gap<0?"down":"up")+'">'+(c.gap>0?"+":"")+c.gap+' FTE</b></div>').join("")+'</div></section>'+
+          '<section class="card"><div class="card-head"><h2>Resource decisions</h2><small>Options for portfolio governance</small></div><div class="card-body"><div class="attention"><div class="attention-mark">A</div><div class="attention-copy"><b>Move two architects</b><span>Delay reporting consolidation by one quarter; protects the identity dependency.</span></div></div><div class="attention"><div class="attention-mark">B</div><div class="attention-copy"><b>Contract specialist capacity</b><span>Closes four engineering positions at an additional forecast cost of R6.8m.</span></div></div><div class="attention"><div class="attention-mark">C</div><div class="attention-copy"><b>Defer lower-ranked demand</b><span>Releases five FTE but delays two noncritical benefits.</span></div></div></div></section></div>';
+      }
+      function governance(){
+        return tools('<button class="btn small" data-action="review-pack">Prepare meeting pack</button>')+roleBanner()+
+          '<div class="grid grid-3"><div class="kpi"><div class="kpi-label">Pending decisions</div><div class="kpi-value">'+decisions.filter(d=>d.status==="Pending").length+'</div><div class="kpi-meta">Evidence complete for two</div></div><div class="kpi"><div class="kpi-label">Controls due</div><div class="kpi-value">7</div><div class="kpi-meta">Four stage reviews · three portfolio reviews</div></div><div class="kpi"><div class="kpi-label">Data quality</div><div class="kpi-value">94%</div><div class="kpi-meta">Five records require correction</div></div></div>'+
+          '<div style="height:14px"></div><div class="grid grid-2"><section class="card"><div class="card-head"><h2>Decision queue</h2><small>Authorization and oversight</small></div><div class="card-body">'+decisions.map(d=>'<div class="decision"><div><b>'+d.name+'</b><span>'+d.ask+' · '+d.body+' · '+d.date+'</span></div><div class="decision-actions">'+(d.status==="Pending"?'<button class="btn small" data-decision="'+d.id+'" data-result="Authorized">Authorize</button><button class="btn small" data-decision="'+d.id+'" data-result="Deferred">Defer</button>':pill(d.status))+'</div></div>').join("")+'</div></section>'+
+          '<section class="card"><div class="card-head"><h2>Review evidence</h2><small>Required before decision</small></div><div class="card-body"><div class="balance-row"><span>Strategic alignment</span><div class="rail"><i class="green" style="width:100%"></i></div><b>Complete</b></div><div class="balance-row"><span>Options and business case</span><div class="rail"><i class="green" style="width:100%"></i></div><b>Complete</b></div><div class="balance-row"><span>Funding confirmation</span><div class="rail"><i class="amber" style="width:75%"></i></div><b>1 open</b></div><div class="balance-row"><span>Resource confirmation</span><div class="rail"><i class="red" style="width:58%"></i></div><b>2 open</b></div><div class="balance-row"><span>Risk response</span><div class="rail"><i class="green" style="width:92%"></i></div><b>Ready</b></div></div></section></div>';
+      }
+      function performance(){
+        return tools('<button class="btn small" data-demo="Benefit actuals opened for the current reporting period.">Update benefit actuals</button>')+roleBanner()+
+          kpis([["Expected portfolio value","R2.46bn","Approved lifetime benefits"],["Realised this year","R148m","76% of year-to-date plan"],["Forecast cost","R1.82bn","R18m below approved funding"],["Benefits at risk","R214m","Concentrated in two programmes"]])+
+          '<div style="height:14px"></div><div class="grid grid-2"><section class="card"><div class="card-head"><h2>Value by portfolio</h2><small>Expected versus realised</small></div><div class="card-body">'+portfolios.map(p=>'<div class="balance-row"><span class="name">'+p.name+'</span><div><div class="rail"><i class="'+(p.health==="Red"?"red":p.health==="Amber"?"amber":"green")+'" style="width:'+p.benefits+'%"></i></div><div class="sub">'+p.benefits+'% of current benefit plan</div></div><b>'+money(Math.round(p.budget*p.benefits/100))+'</b></div>').join("")+'</div></section>'+
+          '<section class="card"><div class="card-head"><h2>Operational measures</h2><small>Value continues after delivery</small></div><div class="card-body">'+outcomes.map(o=>'<div class="decision"><div><b>'+o.name+'</b><span>'+o.target+' · Owner: '+o.owner+'</span></div><div><b class="num">'+o.actual+'</b><div class="sub">'+o.health+'</div></div></div>').join("")+'</div></section></div>';
+      }
+      function risksView(){
+        let cells=""; for(let row=5;row>=1;row--){cells+='<div class="risk-axis">'+row+'</div>';for(let col=1;col<=5;col++){const score=row*col;const cls=score>=16?"high":score>=8?"mid":"";let chips="";risks.forEach((r,i)=>{if(r.score===score)chips+='<button class="risk-chip" style="left:'+(8+i*23)+'px;top:10px" data-record="risk" data-id="'+r.id+'">R'+(i+1)+'</button>';});cells+='<div class="risk-cell '+cls+'">'+chips+'</div>';}}
+        return tools('<button class="btn small" data-demo="New portfolio risk form opened.">Add portfolio risk</button>')+roleBanner()+
+          '<div class="grid grid-2"><section class="card"><div class="card-head"><h2>Portfolio exposure</h2><small>Impact × likelihood</small></div><div class="card-body"><div class="risk-matrix">'+cells+'<div></div>'+[1,2,3,4,5].map(n=>'<div class="risk-axis">'+n+'</div>').join("")+'</div></div></section>'+
+          '<section class="card"><div class="card-head"><h2>Top risks</h2><small>Cross-component exposure</small></div><div class="card-body">'+risks.map((r,i)=>'<div class="decision clickable" data-record="risk" data-id="'+r.id+'"><div><b>R'+(i+1)+' · '+r.name+'</b><span>'+r.portfolio+' · '+r.owner+'</span></div><div><b class="'+(r.score>=16?"down":"")+'">'+r.score+'</b><div class="sub">'+r.trend+'</div></div></div>').join("")+'</div></section></div>';
+      }
+      function reports(){
+        const items=[["Executive portfolio scorecard","Strategy, investment, risk and value exceptions for executive review."],["Governance decision pack","Decision requests, evidence, recommendations and previous conditions."],["Portfolio performance report","Component status, financial variance, milestones and trend analysis."],["Capacity and capability report","Supply, committed capacity, forecast demand and skills gaps."],["Portfolio risk report","Aggregated threats, opportunities, dependencies and responses."],["Benefits realisation report","Expected, forecast and realised value by outcome and owner."]];
+        return tools()+roleBanner()+'<div class="grid grid-3">'+items.map((r,i)=>'<article class="report-card"><div class="report-icon">R'+(i+1)+'</div><h3>'+r[0]+'</h3><p>'+r[1]+'</p><button class="btn small" data-report="'+r[0]+'">Generate report</button></article>').join("")+'</div>';
+      }
+      const renders={overview, strategy, demand, prioritise, roadmap, portfolio, delivery:deliveryView, resources, governance, performance, risks:risksView, reports};
+      function render(){
+        const meta=viewMeta[state.view];
+        const section=sectionForView[state.view];
+        document.querySelectorAll("[data-section]").forEach(el=>el.classList.toggle("active",el.dataset.section===section));
+        content.innerHTML='<div class="view-heading"><h2>'+meta[0]+'</h2><p>'+meta[1]+'</p></div>'+localNav()+renders[state.view]();
+      }
+      function navigate(view){ if(!renders[view])return; state.view=view; render(); document.querySelector(".workspace").scrollIntoView({behavior:"smooth",block:"start"}); }
+      function showToast(message){ const t=document.getElementById("toast");t.textContent=message;t.classList.add("show");clearTimeout(showToast.timer);showToast.timer=setTimeout(()=>t.classList.remove("show"),2600); }
+      function openDrawer(type,id){
+        let r, title, fields=[];
+        if(type==="portfolio"){r=portfolios.find(x=>x.id===id);title=r.name;fields=[["Record",r.id],["Owner",r.owner],["Strategic outcome",r.outcome],["Approved funding",money(r.budget)],["Forecast",money(r.forecast)],["Capacity committed",r.capacity+"%"],["Components",r.components],["Benefits on track",r.benefits+"%"],["Next decision",r.decision]];}
+        if(type==="request"){r=requests.find(x=>x.id===id);title=r.name;fields=[["Request",r.id],["Business owner",r.owner],["Portfolio",r.portfolio],["Strategic outcome",r.outcome],["Stage",r.stage],["Indicative cost",money(r.cost)],["Weighted score",r.score],["Dependency",r.dependency]];}
+        if(type==="delivery"){r=delivery.find(x=>x.id===id);title=r.name;fields=[["Record",r.id+" · "+r.type],["Portfolio",r.portfolio],["Manager",r.manager],["Outcome",r.outcome],["Progress",r.progress+"%"],["Approved budget",money(r.budget)],["Forecast",money(r.forecast)],["Next control point",r.next+" · "+r.date],["Health",r.health]];}
+        if(type==="outcome"){r=outcomes.find(x=>x.id===id);title=r.name;fields=[["Outcome",r.id],["Owner",r.owner],["Target",r.target],["Current actual",r.actual],["Linked investments",r.investments],["Health",r.health]];}
+        if(type==="risk"){r=risks.find(x=>x.id===id);title=r.name;fields=[["Risk",r.id],["Portfolio",r.portfolio],["Owner",r.owner],["Exposure score",r.score],["Trend",r.trend],["Agreed response",r.response]];}
+        if(!r)return;
+        document.getElementById("drawerType").textContent=type;
+        document.getElementById("drawerTitle").textContent=title;
+        document.getElementById("drawerBody").innerHTML=fields.map(f=>'<div class="kv"><span>'+f[0]+'</span><b>'+f[1]+'</b></div>').join("")+'<div style="margin-top:16px"><button class="btn primary" data-demo="Full record opened in the current workspace.">Open full record</button></div>';
+        const d=document.getElementById("drawer");d.classList.add("open");d.setAttribute("aria-hidden","false");
+      }
+      function closeDrawer(){const d=document.getElementById("drawer");d.classList.remove("open");d.setAttribute("aria-hidden","true");}
+      function openModal(){document.getElementById("requestModal").classList.add("open");setTimeout(()=>document.getElementById("requestName").focus(),20);}
+      function closeModal(){document.getElementById("requestModal").classList.remove("open");}
+      document.addEventListener("click",e=>{
+        const view=e.target.closest("[data-view]");if(view){navigate(view.dataset.view);return;}
+        const action=e.target.closest("[data-action]");if(action){
+          const a=action.dataset.action;
+          if(a==="new-request")openModal();
+          if(a==="close-modal")closeModal();
+          if(a==="close-drawer")closeDrawer();
+          if(a==="review-pack")showToast("Portfolio review pack prepared from the latest approved data.");
+          if(a==="status-update")showToast("Status update opened for the current reporting period.");
+          return;
+        }
+        const record=e.target.closest("[data-record]");if(record){openDrawer(record.dataset.record,record.dataset.id);return;}
+        const scenario=e.target.closest("[data-scenario]");if(scenario){
+          state.scenario=scenario.dataset.scenario;
+          if(state.scenario==="protection")state.weights={strategy:25,value:15,risk:30,urgency:20,capacity:10};
+          else if(state.scenario==="digital")state.weights={strategy:35,value:30,risk:10,urgency:15,capacity:10};
+          else state.weights={strategy:35,value:25,risk:15,urgency:15,capacity:10};
+          render();return;
+        }
+        const dec=e.target.closest("[data-decision]");if(dec){const d=decisions.find(x=>x.id===dec.dataset.decision);d.status=dec.dataset.result;render();showToast(d.name+" recorded as "+d.status+".");return;}
+        const report=e.target.closest("[data-report]");if(report)showToast(report.dataset.report+" generated.");
+        const demo=e.target.closest("[data-demo]");if(demo)showToast(demo.dataset.demo);
+      });
+      document.addEventListener("input",e=>{
+        if(e.target.matches("[data-weight]")){
+          state.weights[e.target.dataset.weight]=Number(e.target.value);
+          const total=Object.values(state.weights).reduce((a,b)=>a+b,0);
+          e.target.nextElementSibling.textContent=e.target.value+"%";
+          const small=e.target.closest(".card").querySelector(".card-head small");if(small)small.textContent="Total "+total+"%";
+        }
+      });
+      document.addEventListener("change",e=>{
+        if(e.target.matches("[data-weight]"))render();
+        if(e.target.id==="portfolioFilter")showToast(e.target.value+" filter applied to this view.");
+      });
+      document.getElementById("requestForm").addEventListener("submit",e=>{
+        e.preventDefault();const f=new FormData(e.currentTarget);
+        requests.unshift({id:"REQ-"+(242+requests.length),name:f.get("name"),portfolio:f.get("portfolio"),owner:f.get("owner"),stage:"Submitted",score:0,cost:Number(f.get("cost"))||0,outcome:f.get("outcome"),dependency:"To be assessed",status:"Green"});
+        e.currentTarget.reset();closeModal();state.view="demand";render();showToast("Request captured and sent for qualification.");
+      });
+      const roleSelect=document.getElementById("roleSelect");
+      Object.entries(roles).forEach(([k,r])=>roleSelect.add(new Option(r.label,k)));
+      roleSelect.value=state.role;
+      roleSelect.addEventListener("change",e=>{state.role=e.target.value;const r=roles[state.role];document.getElementById("personName").textContent=r.person;document.getElementById("avatar").textContent=r.initials;state.view=r.landing;render();showToast(r.label+" view loaded.");});
+      document.getElementById("personName").textContent=roles[state.role].person;
+      document.getElementById("avatar").textContent=roles[state.role].initials;
+      document.addEventListener("keydown",e=>{if(e.key==="Escape"){closeModal();closeDrawer();}});
+      render();
+    </script>
+    <script src="nav.js"></script>
+  </body>
+</html>

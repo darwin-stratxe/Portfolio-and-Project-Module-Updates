@@ -1,0 +1,382 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PPMIS management flow: enterprise to delivery</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+      .intro { max-width: 700px; margin: 0 0 30px; color: #343940; font-size: 16px; line-height: 1.65; }
+      .key-point { margin: 18px 0 24px; padding: 15px 17px; border-left: 3px solid var(--ink); background: var(--soft); }
+      .key-point b { color: var(--ink); }
+      .source-figure { margin: 20px 0 27px; padding: 16px; border: 1px solid var(--line2); background: #fafbfc; }
+      .source-figure img { display: block; width: auto; max-width: 100%; height: auto; margin: 0 auto; }
+      .source-figure.wide img { width: 100%; }
+      .source-figure figcaption { margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--line); color: var(--muted); font-size: 11.5px; line-height: 1.5; }
+      .framework-table, .record-table { width: 100%; margin: 18px 0 28px; border-collapse: collapse; border: 1px solid var(--line2); font-size: 12.5px; }
+      .framework-table th, .record-table th { padding: 10px 12px; background: #f3f5f7; color: var(--ink); text-align: left; font-size: 10.5px; letter-spacing: 0.06em; text-transform: uppercase; }
+      .framework-table td, .record-table td { padding: 12px; border-top: 1px solid var(--line2); vertical-align: top; }
+      .framework-table td:first-child { width: 30%; color: var(--ink); font-weight: 650; }
+      .record-table td:first-child { width: 26%; color: var(--ink); font-weight: 650; }
+      .flow { display: grid; grid-template-columns: repeat(5, 1fr); margin: 18px 0 12px; border: 1px solid var(--line2); }
+      .flow > div { min-height: 128px; padding: 14px 12px; border-right: 1px solid var(--line2); background: #fff; }
+      .flow > div:last-child { border-right: 0; }
+      .flow .step { display: block; margin-bottom: 10px; color: var(--blue); font-size: 10px; font-weight: 700; letter-spacing: 0.08em; }
+      .flow b { display: block; margin-bottom: 6px; color: var(--ink); font-size: 12px; line-height: 1.35; }
+      .flow small { display: block; color: var(--muted); font-size: 10.5px; line-height: 1.45; }
+      .feedback { margin: 0 0 26px; padding: 10px 12px; border: 1px dashed #c9d0d8; color: #555d68; font-size: 11.5px; }
+      .level-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 9px; margin: 17px 0 27px; }
+      .level-card { padding: 14px; border: 1px solid var(--line2); background: #fff; }
+      .level-card b { display: block; margin-bottom: 6px; color: var(--ink); }
+      .level-card span { display: block; color: var(--muted); font-size: 11.5px; line-height: 1.5; }
+      .process-card { margin: 14px 0; padding: 18px; border: 1px solid var(--line2); background: #fff; }
+      .process-card .stage { display: block; margin-bottom: 5px; color: var(--blue); font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; }
+      .process-card h4 { margin: 0 0 9px; color: var(--ink); font-size: 16px; }
+      .process-card p { margin-bottom: 11px; }
+      .detail-grid { display: grid; grid-template-columns: 112px 1fr; gap: 7px 14px; margin: 13px 0 0; padding-top: 12px; border-top: 1px dashed var(--line2); font-size: 12.5px; }
+      .detail-grid dt { color: var(--muted); }
+      .detail-grid dd { margin: 0; color: #343940; }
+      .ui-path { color: #173f9c; font-weight: 650; }
+      .state { display: inline-block; margin: 2px 3px 2px 0; padding: 2px 7px; border: 1px solid #dbe2ec; border-radius: 99px; background: #f5f8fc; color: #465467; font-size: 10.5px; }
+      .support-box { margin: 15px 0 27px; padding: 16px 18px; border: 1px solid #cfd9ea; background: #f3f7fd; }
+      .support-box b { color: var(--ink); }
+      .role-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; margin: 17px 0 27px; }
+      .role { padding: 14px; border: 1px solid var(--line2); }
+      .role b { display: block; margin-bottom: 5px; color: var(--ink); }
+      .role span { display: block; color: var(--muted); font-size: 11.5px; line-height: 1.5; }
+      .example { margin: 16px 0 28px; padding: 0; list-style: none; counter-reset: item; border: 1px solid var(--line2); }
+      .example li { display: grid; grid-template-columns: 30px 1fr; gap: 9px; padding: 12px 14px; border-top: 1px solid var(--line2); }
+      .example li:first-child { border-top: 0; }
+      .example li::before { counter-increment: item; content: counter(item, decimal-leading-zero); color: var(--blue); font-size: 10px; font-weight: 700; }
+      .example b { color: var(--ink); }
+      .source-list { margin: 14px 0 0; padding: 0; list-style: none; }
+      .source-list li { padding: 10px 0; border-top: 1px solid var(--line); font-size: 12.5px; }
+      .source-list li:first-child { border-top: 0; }
+      .source-list span { display: block; color: var(--muted); font-size: 11px; }
+      @media (max-width: 1000px) { .flow { grid-template-columns: 1fr 1fr; } .flow > div { border-bottom: 1px solid var(--line2); } .level-grid { grid-template-columns: 1fr; } }
+      @media (max-width: 760px) { .flow, .role-grid { grid-template-columns: 1fr; } .detail-grid { grid-template-columns: 1fr; } .detail-grid dd { margin-bottom: 6px; } .framework-table, .record-table { font-size: 11.5px; } }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <div class="crumb"><span><b>2026</b> · PPMIS · Management flow</span></div>
+      <h1>How work moves from enterprise priorities to programmes and projects</h1>
+
+      <div class="grid">
+        <main class="content">
+          <p class="intro">
+            Enterprise priorities enter the portfolio as demand. Portfolio management qualifies, compares and authorises the work. Programmes coordinate related projects, projects deliver defined outputs, and operations accepts and sustains the resulting capability and value.
+          </p>
+          <div class="key-point">
+            <b>The portfolio is the management layer between strategy and delivery.</b> It controls which work proceeds, when it proceeds and what funding and capacity it may use. Programmes and projects then manage delivery at different levels of detail.
+          </div>
+
+          <div class="grp" id="framework">Enterprise Management Framework</div>
+          <section class="sec">
+            <h3 class="sec-t">Five connected management components</h3>
+            <p>The framework places portfolio management between enterprise and portfolio planning above it, and delivery and operations below it. This establishes the hand-offs the system must control.</p>
+            <figure class="source-figure">
+              <a href="https://www.pmi.org/learning/library/work-delivery-process-project-portfolio-management-6680" target="_blank" rel="noopener">
+                <img src="assets/pmi-enterprise-management-framework.jpg" alt="Enterprise Management Framework with enterprise planning, portfolio planning, portfolio management, work management and operations management" />
+              </a>
+              <figcaption>Enterprise Management Framework, Exhibit 1. Source: <a href="https://www.pmi.org/learning/library/work-delivery-process-project-portfolio-management-6680" target="_blank" rel="noopener">Anthony Boles, Project Management Institute</a>.</figcaption>
+            </figure>
+            <table class="framework-table">
+              <thead><tr><th>Component</th><th>What is managed</th><th>System result</th></tr></thead>
+              <tbody>
+                <tr><td>1. Enterprise planning</td><td>Strategic objectives, required outcomes, policy or regulatory commitments, risk appetite and the available funding envelope.</td><td>A dated set of priorities and constraints that can be linked to every investment request.</td></tr>
+                <tr><td>2. Portfolio planning</td><td>Work is grouped around business areas, services or outcomes. Leadership sets the portfolio roadmap and broad capacity allocation.</td><td>Portfolio boundaries, owners, targets, investment themes and planning periods.</td></tr>
+                <tr><td>3. Portfolio management</td><td>Demand is captured, qualified, prioritised, authorised and continually balanced against funding, people, risk and strategic value.</td><td>A governed and prioritised portfolio backlog plus a realisation roadmap.</td></tr>
+                <tr><td>4. Work management</td><td>Authorised work is delivered through programmes, projects, releases or operational work. Scope, schedule, cost, risk, change and outputs are controlled here.</td><td>Accepted deliverables, outcomes, forecasts, issues, decisions and closure evidence.</td></tr>
+                <tr><td>5. Operations management</td><td>Finance, people, procurement, technology and business operations support delivery, accept the completed capability and track operational performance.</td><td>Handover, adoption, benefit measures, service performance and lessons returned to planning.</td></tr>
+              </tbody>
+            </table>
+          </section>
+
+          <section class="sec" id="component-flow">
+            <h3 class="sec-t">How the five components interact</h3>
+            <div class="flow" aria-label="Flow between enterprise management components">
+              <div><span class="step">01</span><b>Enterprise direction</b><small>Defines the outcomes, constraints and investment appetite.</small></div>
+              <div><span class="step">02</span><b>Portfolio plan</b><small>Translates direction into portfolio themes, targets and capacity envelopes.</small></div>
+              <div><span class="step">03</span><b>Portfolio decision</b><small>Selects and sequences the best combination of work.</small></div>
+              <div><span class="step">04</span><b>Programme and project delivery</b><small>Coordinates outcomes and produces the authorised outputs.</small></div>
+              <div><span class="step">05</span><b>Operational value</b><small>Accepts the capability and measures adoption and benefits.</small></div>
+            </div>
+            <div class="feedback">Feedback moves in both directions: delivery forecasts and capacity limits can cause portfolio rebalancing; benefit results and lessons can change the next enterprise plan.</div>
+            <div class="level-grid">
+              <div class="level-card"><b>Portfolio</b><span>All current and proposed investments managed together to achieve strategic objectives. The concern is selection, balance, funding, capacity and value.</span></div>
+              <div class="level-card"><b>Programme</b><span>A coordinated group of related projects and change activity managed together to achieve outcomes and benefits that one project cannot deliver alone.</span></div>
+              <div class="level-card"><b>Project</b><span>Temporary work with a defined scope, delivery approach, baseline and output. The concern is controlled execution and acceptance.</span></div>
+            </div>
+          </section>
+
+          <div class="grp" id="portfolio-process">Portfolio management process</div>
+          <section class="sec">
+            <h3 class="sec-t">From work intake to an active portfolio roadmap</h3>
+            <p>The front end of the system uses one controlled pipeline. A request becomes eligible for investment only after it has been qualified, compared with other demand and approved within the available funding and capacity.</p>
+            <figure class="source-figure wide">
+              <a href="https://www.pmi.org/learning/library/work-delivery-process-project-portfolio-management-6680" target="_blank" rel="noopener">
+                <img src="assets/pmi-portfolio-management-process.jpg" alt="Portfolio management process showing work intake, work qualification, portfolio prioritization, enterprise prioritization and management of the portfolio roadmap" />
+              </a>
+              <figcaption>Portfolio Management process, Exhibit 2. Source: <a href="https://www.pmi.org/learning/library/work-delivery-process-project-portfolio-management-6680" target="_blank" rel="noopener">Anthony Boles, Project Management Institute</a>.</figcaption>
+            </figure>
+          </section>
+
+          <section class="sec" id="intake">
+            <article class="process-card">
+              <span class="stage">Stage 1 · Work intake</span><h4>Capture one investment request</h4>
+              <p>A sponsor records the problem or opportunity, intended outcome, beneficiaries, strategic objective, urgency and indicative size. The request remains demand; it is not yet a project.</p>
+              <dl class="detail-grid">
+                <dt>Manager action</dt><dd>The sponsor creates the request, checks for duplicates, names an accountable owner and submits it for triage.</dd>
+                <dt>UI section</dt><dd><span class="ui-path">Demand &amp; Decisions → Demand capture</span></dd>
+                <dt>Components</dt><dd>Guided form, objective selector, sponsor and beneficiary fields, value statement, cost range, urgency, attachments, duplicate search, save draft and submit.</dd>
+                <dt>Control</dt><dd>The system assigns one initiative ID, records the original submission and prevents the requester from treating the item as approved work.</dd>
+                <dt>Record state</dt><dd><span class="state">Draft</span><span class="state">Submitted</span><span class="state">Returned</span><span class="state">Triaged</span></dd>
+              </dl>
+            </article>
+          </section>
+
+          <section class="sec" id="qualification">
+            <article class="process-card">
+              <span class="stage">Stage 2 · Work qualification</span><h4>Test whether the request is viable and ready for comparison</h4>
+              <p>An analyst develops the information needed for a decision: options, expected value, effort, cost, risk, complexity, dependencies, delivery route and capacity implications.</p>
+              <dl class="detail-grid">
+                <dt>Manager action</dt><dd>The demand analyst coordinates input from finance, risk, technology, procurement and resource managers; the sponsor confirms the completed assessment.</dd>
+                <dt>UI section</dt><dd><span class="ui-path">Demand &amp; Decisions → Investment Assessment Workbench</span></dd>
+                <dt>Components</dt><dd>Inherited request fields, option comparison, estimate class and confidence, risk assessment, dependency register, skills and capacity requirement, benefit profile, review comments and sponsor confirmation.</dd>
+                <dt>Control</dt><dd>Author fields and analyst fields remain distinguishable. Missing evidence, unresolved reviews and low estimate confidence are visible in the decision pack.</dd>
+                <dt>Record state</dt><dd><span class="state">Assessment in progress</span><span class="state">Sponsor review</span><span class="state">Ready for prioritisation</span></dd>
+              </dl>
+            </article>
+          </section>
+
+          <section class="sec" id="prioritisation">
+            <article class="process-card">
+              <span class="stage">Stage 3 · Prioritisation and decision</span><h4>Compare the complete set of demand</h4>
+              <p>The portfolio manager ranks eligible demand against strategic contribution, mandatory commitments, benefit, risk, affordability and scarce capacity. Decision-makers approve a balanced set of work rather than isolated business cases.</p>
+              <dl class="detail-grid">
+                <dt>Manager action</dt><dd>The portfolio manager builds and compares scenarios. The authorised forum reviews a frozen pack and records approval, conditions, sequencing, deferral or decline with a reason.</dd>
+                <dt>UI section</dt><dd><span class="ui-path">Demand &amp; Decisions → Prioritisation / Investment scenarios / Decision pack</span></dd>
+                <dt>Components</dt><dd>Weighted scoring, rank and contribution view, scenario builder, funding and capacity bars, mandatory-work flags, conflict-of-interest and quorum checks, recommendation, decision, rationale and conditions.</dd>
+                <dt>Control</dt><dd>The score supports judgement but does not replace it. Every override and decision stores the authority, meeting, configuration version and rationale.</dd>
+                <dt>Record state</dt><dd><span class="state">Prioritised</span><span class="state">Approved</span><span class="state">Approved with conditions</span><span class="state">Deferred</span><span class="state">Declined</span></dd>
+              </dl>
+            </article>
+          </section>
+
+          <section class="sec" id="roadmap">
+            <article class="process-card">
+              <span class="stage">Stage 4 · Portfolio roadmap</span><h4>Admit, structure and sequence approved work</h4>
+              <p>Approval creates an authorised investment. It must then be placed in the correct portfolio, assigned to a programme where work is related, or established as a stand-alone project. The roadmap is rebalanced whenever priorities, forecasts or capacity change.</p>
+              <dl class="detail-grid">
+                <dt>Manager action</dt><dd>The portfolio manager confirms admission, funding period, delivery route and sequencing. Programme managers confirm whether related work belongs within an existing or new programme.</dd>
+                <dt>UI section</dt><dd><span class="ui-path">Portfolio &amp; Programmes → Portfolio formation / Admission routes / Composition &amp; hierarchy</span></dd>
+                <dt>Components</dt><dd>Admission checklist, portfolio and programme assignment, stand-alone classification, multiyear roadmap, funding allocation, capacity heatmap, dependency map and scenario comparison.</dd>
+                <dt>Control</dt><dd>Approved work cannot begin delivery until admission conditions, accountable owners, initial funding and delivery route are confirmed.</dd>
+                <dt>Record state</dt><dd><span class="state">Approved investment</span><span class="state">Admitted</span><span class="state">Sequenced</span><span class="state">On hold</span></dd>
+              </dl>
+            </article>
+            <div class="support-box"><b>Capacity management supports every stage.</b> Resource managers publish available roles and skills, programme and project managers submit demand, and the portfolio manager resolves over-allocation before committing the roadmap.</div>
+          </section>
+
+          <div class="grp" id="delivery">Programme and project delivery</div>
+          <section class="sec" id="programme">
+            <article class="process-card">
+              <span class="stage">Delivery level 1 · Programme</span><h4>Coordinate related projects around shared outcomes</h4>
+              <p>A programme creates the integration layer between the portfolio commitment and multiple delivery teams. It manages the sequence of projects, shared milestones, dependencies, transition activity and the benefit path across the whole change.</p>
+              <dl class="detail-grid">
+                <dt>Manager action</dt><dd>The programme manager establishes the programme roadmap, assigns projects, resolves cross-project dependencies, coordinates resources and escalates decisions that exceed programme tolerance.</dd>
+                <dt>UI section</dt><dd><span class="ui-path">Portfolio &amp; Programmes → Programme workbench / Roadmap / Integrated master schedule / Dependencies / Benefits architecture</span></dd>
+                <dt>Components</dt><dd>Outcome map, tranche or release plan, project hierarchy, shared milestone view, dependency network, aggregated funding and capacity, programme RAID, benefit map, decisions and transition plan.</dd>
+                <dt>Interaction</dt><dd>Receives priorities and constraints from the portfolio; sends delivery forecasts, exceptions and benefit outlook upward; sends scope, interfaces and milestones to projects.</dd>
+                <dt>Record state</dt><dd><span class="state">Defined</span><span class="state">Baselined</span><span class="state">Delivering</span><span class="state">Transitioning</span><span class="state">Closed</span></dd>
+              </dl>
+            </article>
+          </section>
+
+          <section class="sec" id="project">
+            <article class="process-card">
+              <span class="stage">Delivery level 2 · Project</span><h4>Plan and control the authorised output</h4>
+              <p>The project workspace contains the delivery detail. It turns the approved mandate into a baseline, manages execution and change, produces evidence for oversight and closes only after outputs and residual responsibilities have been accepted.</p>
+              <dl class="detail-grid">
+                <dt>Manager action</dt><dd>The project manager completes initiation, secures baseline approval, manages work and RAID, submits period updates, raises changes, records acceptance and transfers open benefits and actions.</dd>
+                <dt>UI section</dt><dd><span class="ui-path">Projects → Initiation / Planning / Execution &amp; control / Close-out</span></dd>
+                <dt>Components</dt><dd>Mandate and charter, roles, stakeholders, WBS or backlog, schedule, cost baseline, resource plan, RAID, quality and procurement records, change requests, deliverables, status updates, acceptance and close-out checklist.</dd>
+                <dt>Interaction</dt><dd>Receives scope, funding, milestones, tolerances and dependencies from the programme or portfolio; returns actuals, forecasts, risks, changes, outputs and evidence.</dd>
+                <dt>Record state</dt><dd><span class="state">Initiating</span><span class="state">Planning</span><span class="state">Baselined</span><span class="state">Delivering</span><span class="state">Closing</span><span class="state">Closed</span></dd>
+              </dl>
+            </article>
+          </section>
+
+          <section class="sec" id="project-controls">
+            <h3 class="sec-t">PMBOK 7 controls inside the project workspace</h3>
+            <p>The performance domains operate together throughout delivery. They are implemented as connected records and working views, not as eight stages that a manager completes once.</p>
+            <table class="record-table">
+              <thead><tr><th>Performance domain</th><th>UI components used by the project manager</th></tr></thead>
+              <tbody>
+                <tr><td>Stakeholders</td><td>Sponsor and stakeholder register, influence and engagement assessment, communication actions, consultation evidence and acceptance.</td></tr>
+                <tr><td>Team</td><td>Role assignments, responsibility matrix, skills, availability, team agreements and capacity requests.</td></tr>
+                <tr><td>Development approach &amp; lifecycle</td><td>Predictive, adaptive or hybrid method; tailored stages, gates, artefacts, iteration or release plan and approval history.</td></tr>
+                <tr><td>Planning</td><td>Scope, WBS or backlog, schedule, cost, resources, quality, procurement, communication, risk and benefit baselines.</td></tr>
+                <tr><td>Project work</td><td>Assignments, decisions, meetings, quality checks, issues, knowledge, procurement activity and controlled changes.</td></tr>
+                <tr><td>Delivery</td><td>Deliverables, acceptance criteria, outcome link, transition readiness, handover and operational acceptance.</td></tr>
+                <tr><td>Measurement</td><td>Baseline versus actual, forecast, trend, tolerance, milestone status, output completion and outcome or benefit indicators.</td></tr>
+                <tr><td>Uncertainty</td><td>Risks, assumptions, issues, dependencies, scenarios, reserves, response owners and response effectiveness.</td></tr>
+              </tbody>
+            </table>
+            <div class="support-box"><b>Tailoring is set when the project is admitted and refined at the baseline gate.</b> Project size, uncertainty, criticality and delivery approach determine which fields, artefacts, reviews and approvals are mandatory. The configuration version remains attached to the project record.</div>
+          </section>
+
+          <section class="sec" id="oversight">
+            <article class="process-card">
+              <span class="stage">Management control · Oversight</span><h4>Validate performance and manage exceptions</h4>
+              <p>Oversight compares current actuals and forecasts with the authorised baseline. It identifies tolerance breaches, traces the source record and controls the decision to recover, change, pause or stop work.</p>
+              <dl class="detail-grid">
+                <dt>Manager action</dt><dd>Project and programme managers submit updates; the PMO validates data; finance and resource managers reconcile actuals; governance forums decide material exceptions.</dd>
+                <dt>UI section</dt><dd><span class="ui-path">Oversight &amp; Intervention → Performance / Financials / Resources / Risk / Governance / Exceptions</span></dd>
+                <dt>Components</dt><dd>Baseline-versus-actual trend, schedule and cost forecast, RAG with reason, tolerance panel, dependency and risk alerts, data-quality checks, option analysis, recovery plan, direction and decision log.</dd>
+                <dt>Interaction</dt><dd>A project exception can roll up to a programme forecast and change the portfolio roadmap. An approved portfolio intervention flows back down as a new constraint or decision.</dd>
+                <dt>Record state</dt><dd><span class="state">Update due</span><span class="state">Validated</span><span class="state">Exception open</span><span class="state">Intervention active</span><span class="state">Recovered</span></dd>
+              </dl>
+            </article>
+          </section>
+
+          <section class="sec" id="operations">
+            <article class="process-card">
+              <span class="stage">Value level · Operations and benefits</span><h4>Accept the capability and measure value after delivery</h4>
+              <p>Project closure transfers the capability into operations; it does not end the value obligation. Each benefit retains an owner, baseline, target, measurement date and evidence source after the delivery team has disbanded.</p>
+              <dl class="detail-grid">
+                <dt>Manager action</dt><dd>The operational owner accepts the handover and adoption plan. The benefit owner records actual results and explains variance. Assurance reviews the evidence and follows corrective actions.</dd>
+                <dt>UI section</dt><dd><span class="ui-path">Value, Assurance &amp; Reporting → Benefits realisation / Adoption &amp; transition / Monitoring &amp; evaluation / Evidence</span></dd>
+                <dt>Components</dt><dd>Operational-readiness checklist, acceptance record, adoption measures, benefit register, baseline and target, actual value, evidence attachment, evaluation schedule, finding, corrective action and lesson.</dd>
+                <dt>Interaction</dt><dd>Benefit performance returns to the programme and portfolio view and informs the next planning and prioritisation cycle.</dd>
+                <dt>Record state</dt><dd><span class="state">Handover planned</span><span class="state">Accepted</span><span class="state">Benefit tracking</span><span class="state">Benefit realised</span><span class="state">Benefit closed</span></dd>
+              </dl>
+            </article>
+          </section>
+
+          <div class="grp" id="sections">What each system section is for</div>
+          <section class="sec">
+            <table class="record-table">
+              <thead><tr><th>Section</th><th>What the manager sees and does</th></tr></thead>
+              <tbody>
+                <tr><td>Overview &amp; My Work</td><td>Assigned approvals, returned items, updates due, conditions, exceptions and forum actions. The manager opens the source record from the task rather than editing portfolio data on a dashboard.</td></tr>
+                <tr><td>Demand &amp; Decisions</td><td>The complete demand pipeline from first submission to recorded investment decision, including assessments, scores, scenarios and decision packs.</td></tr>
+                <tr><td>Portfolio &amp; Programmes</td><td>Portfolio composition, roadmaps, programmes, approved investments, funding, capacity, dependencies, benefits and rebalancing options.</td></tr>
+                <tr><td>Projects</td><td>Initiation, planning, baselines, execution, RAID, changes, deliverables, reporting, acceptance and close-out for each authorised project.</td></tr>
+                <tr><td>Oversight &amp; Intervention</td><td>Validated performance, financial and resource forecasts, tolerance breaches, exceptions, recovery options and governance decisions.</td></tr>
+                <tr><td>Value, Assurance &amp; Reporting</td><td>Benefit actuals, strategic contribution, operational adoption, evaluation, evidence, assurance findings, reports and lessons.</td></tr>
+                <tr><td>PMO Design &amp; Administration</td><td>Roles, delegations, forums, gates, workflows, scoring models, tolerances, templates, delivery methods, security, integrations and retention rules.</td></tr>
+              </tbody>
+            </table>
+          </section>
+
+          <section class="sec" id="capability">
+            <h3 class="sec-t">PMO capability improvement inside administration</h3>
+            <p>The administration workspace also manages how the PPMIS operating model improves. Each capability is assessed against six factors from the PMO maturity resource, then converted into a prioritised improvement backlog.</p>
+            <table class="record-table">
+              <thead><tr><th>Assessment factor</th><th>Management use</th></tr></thead>
+              <tbody>
+                <tr><td>Importance</td><td>Classify the capability as core, secondary or tertiary for the current operating model.</td></tr>
+                <tr><td>Effort</td><td>Estimate the time and cost currently consumed by the capability.</td></tr>
+                <tr><td>Maturity</td><td>Assess repeatability and evidence from interviews, records and artefacts.</td></tr>
+                <tr><td>Cultural alignment</td><td>Check whether the practice is understood, valued and consistently adopted by its users.</td></tr>
+                <tr><td>Improvement impact</td><td>Estimate the operational gain available if the gap is addressed.</td></tr>
+                <tr><td>Connectivity</td><td>Identify the other capabilities, workflows and roles that will be affected by the change.</td></tr>
+              </tbody>
+            </table>
+            <dl class="detail-grid">
+              <dt>Manager action</dt><dd>The PMO design authority reviews evidence, sets the current and target state, assigns an owner and approves an improvement intervention and review date.</dd>
+              <dt>UI section</dt><dd><span class="ui-path">PMO Design &amp; Administration → Maturity presets / Capability effectiveness / Improvement backlog</span></dd>
+              <dt>Components</dt><dd>Capability assessment, evidence links, current and target state, importance and impact rating, connectivity map, improvement action, owner, cost and review date.</dd>
+            </dl>
+          </section>
+
+          <section class="sec" id="roles">
+            <h3 class="sec-t">Role-specific working views</h3>
+            <div class="role-grid">
+              <div class="role"><b>Executive or investment authority</b><span>Views objectives, portfolio balance, major exceptions and benefit outlook; approves investments and material interventions.</span></div>
+              <div class="role"><b>Portfolio manager</b><span>Controls the demand pipeline, builds scenarios, admits approved work, balances the roadmap and recommends changes.</span></div>
+              <div class="role"><b>Programme manager</b><span>Coordinates related projects, shared milestones, dependencies, outcomes, resources, transition and benefits.</span></div>
+              <div class="role"><b>Project manager</b><span>Builds the baseline, manages detailed delivery, reports forecasts, raises changes and records acceptance and closure evidence.</span></div>
+              <div class="role"><b>Finance and resource managers</b><span>Confirm affordability, actual expenditure, available roles and skills, allocations and forecast capacity pressure.</span></div>
+              <div class="role"><b>Operational and benefit owners</b><span>Accept the delivered capability, manage adoption and continue recording benefit results after project closure.</span></div>
+              <div class="role"><b>PMO and assurance</b><span>Validate data, monitor compliance and tolerances, coordinate gates, inspect evidence and manage findings.</span></div>
+              <div class="role"><b>Auditor</b><span>Reads versions, decisions, permissions, evidence and state history without changing operational records.</span></div>
+            </div>
+          </section>
+
+          <div class="grp" id="records">Core record relationships</div>
+          <section class="sec">
+            <h3 class="sec-t">One chain of records across all levels</h3>
+            <table class="record-table">
+              <thead><tr><th>Record</th><th>Relationship</th></tr></thead>
+              <tbody>
+                <tr><td>Strategic objective</td><td>Links to many initiatives, investments, benefits and measures so contribution can be traced from plan to result.</td></tr>
+                <tr><td>Initiative</td><td>Has one current assessment and may have many scored versions, reviews, scenarios, decisions and conditions.</td></tr>
+                <tr><td>Approved investment</td><td>Is admitted to one portfolio and is assigned to a programme or a stand-alone project delivery route.</td></tr>
+                <tr><td>Portfolio</td><td>Contains investments, programmes and stand-alone projects and controls their funding, capacity and sequencing.</td></tr>
+                <tr><td>Programme</td><td>Contains related projects and maintains shared outcomes, milestones, dependencies, transition activity and benefits.</td></tr>
+                <tr><td>Project</td><td>Contains its baseline, milestones, costs, resources, RAID, changes, updates, deliverables, acceptance and evidence.</td></tr>
+                <tr><td>Benefit</td><td>Links to an objective and the investment, programme or project that enables it, with an operational owner responsible for measurement.</td></tr>
+                <tr><td>Decision and audit event</td><td>Records every material state change with actor, authority, date, rationale, configuration version and linked evidence.</td></tr>
+              </tbody>
+            </table>
+          </section>
+
+          <section class="sec" id="example">
+            <h3 class="sec-t">Example: one request moving through the system</h3>
+            <ol class="example">
+              <li><div><b>A sponsor submits an improvement request</b> in Demand capture. The initiative receives an ID and enters triage.</div></li>
+              <li><div><b>The demand analyst qualifies it</b> in the Assessment Workbench, with finance, risk, resource and technical input.</div></li>
+              <li><div><b>The portfolio manager adds it to scenarios</b> and compares its value, cost, risk and capacity demand with other work.</div></li>
+              <li><div><b>The investment forum approves it with conditions.</b> The decision, rationale, authority and conditions are frozen in the decision pack.</div></li>
+              <li><div><b>The portfolio manager admits the investment</b> and assigns it to a programme because it shares outcomes and dependencies with existing work.</div></li>
+              <li><div><b>The programme manager creates the delivery structure</b>, assigns the project, aligns milestones and records the shared benefit path.</div></li>
+              <li><div><b>The project manager establishes the baseline</b>, delivers the authorised output and submits actuals, forecasts, risks and changes.</div></li>
+              <li><div><b>The PMO monitors exceptions.</b> If a tolerance is breached, options and a recovery decision move through Oversight &amp; Intervention.</div></li>
+              <li><div><b>The operational owner accepts the capability</b>, and the project closes after evidence and residual actions are transferred.</div></li>
+              <li><div><b>The benefit owner continues measurement</b>. Actual value and lessons return to portfolio review and the next enterprise planning cycle.</div></li>
+            </ol>
+          </section>
+
+          <div class="grp" id="sources">Framework sources</div>
+          <section class="sec">
+            <ul class="source-list">
+              <li><a href="https://www.pmi.org/learning/library/work-delivery-process-project-portfolio-management-6680" target="_blank" rel="noopener">PMI: The work delivery process — a pragmatic approach to project portfolio management</a><span>Enterprise Management Framework; intake, qualification, prioritisation, roadmap and capacity-management process.</span></li>
+              <li><a href="PMBOK 7th Edition copy.pdf">PMBOK Guide, Seventh Edition and The Standard for Project Management</a><span>Value delivery, portfolio–programme–project context, governance, tailoring, performance domains, models, methods and artefacts.</span></li>
+              <li><a href="Untitled.pdf">Modernizing the PMO Maturity Assessment</a><span>Capability effectiveness, maturity, cultural alignment, organisational impact and connectivity.</span></li>
+              <li><a href="https://committee.iso.org/sites/tc258/home/projects/published/iso-21502.html" target="_blank" rel="noopener">ISO/TC 258 portfolio, programme and project management standards</a><span>Guidance for portfolios, programmes, projects and governance.</span></li>
+            </ul>
+          </section>
+        </main>
+
+        <nav class="toc" id="toc">
+          <h4>Contents</h4>
+          <div class="glabel">Framework</div>
+          <a href="#framework">Five components</a><a href="#component-flow">How they interact</a>
+          <div class="glabel">Portfolio process</div>
+          <a href="#portfolio-process">Process framework</a><a href="#intake">Work intake</a><a href="#qualification">Qualification</a><a href="#prioritisation">Prioritisation</a><a href="#roadmap">Portfolio roadmap</a>
+          <div class="glabel">Delivery</div>
+          <a href="#programme">Programme management</a><a href="#project">Project management</a><a href="#project-controls">PMBOK 7 controls</a><a href="#oversight">Oversight</a><a href="#operations">Operations and value</a>
+          <div class="glabel">System design</div>
+          <a href="#sections">System sections</a><a href="#capability">PMO capability</a><a href="#roles">Role views</a><a href="#records">Record relationships</a><a href="#example">Worked example</a><a href="#sources">Sources</a>
+          <div class="glabel">Pages</div>
+          <a href="index.html">Research note</a><a href="prototype.html">Prototype</a>
+        </nav>
+      </div>
+    </div>
+    <script>
+      (function () {
+        const links = [...document.querySelectorAll("#toc a[href^='#']")], map = {};
+        links.forEach((a) => { const el = document.getElementById(a.getAttribute("href").slice(1)); if (el) map[el.id] = a; });
+        const obs = new IntersectionObserver((entries) => { entries.forEach((entry) => { if (!entry.isIntersecting) return; links.forEach((link) => link.classList.remove("active")); if (map[entry.target.id]) map[entry.target.id].classList.add("active"); }); }, { rootMargin: "-15% 0px -75% 0px" });
+        Object.keys(map).forEach((id) => obs.observe(document.getElementById(id)));
+      })();
+    </script>
+    <script src="nav.js"></script>
+  </body>
+</html>
