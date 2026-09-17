@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="1090" viewBox="0 0 1400 1090" role="img" aria-labelledby="title desc">
+<title id="title">Proposed StratXe integration model</title><desc id="desc">Strategy, annual performance planning and departmental operational planning connect to a cross-department portfolio decision layer. Authorised programmes and standalone projects deliver capabilities into operations. Validated evidence returns through performance reporting to portfolio review. Resources constrain both layers.</desc>
+<defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto-start-reverse"><path d="M0 0L8 4L0 8z" fill="#526879"/></marker></defs>
+<rect width="1400" height="1090" fill="#f4f7fa"/>
+<style>text{font-family:Arial,sans-serif;fill:#183042}.title{font-size:32px;font-weight:700}.sub{font-size:17px;fill:#506577}.heading{font-size:18px;font-weight:700;letter-spacing:1px}.boxhead{font-size:23px;font-weight:700}.body{font-size:18px}.edge{font-size:16px;fill:#455d70}.small{font-size:15px;fill:#526879}</style>
+
+<text x="55" y="53" class="title" text-anchor="start">StratXe: connect planning to investment decisions</text>
+<text x="55" y="85" class="sub" text-anchor="start">Proposed architecture · 16 September 2026 · Existing module locations and interfaces require confirmation</text>
+<text x="55" y="137" class="heading" text-anchor="start">PLANNING AND ACCOUNTABILITY</text>
+<text x="840" y="137" class="heading" text-anchor="start">CROSS-DEPARTMENT CHANGE</text>
+<rect x="55" y="160" width="500" height="102" rx="12" fill="#ffffff" stroke="#cbd6df" stroke-width="2"/>
+<text x="79" y="195" class="boxhead" text-anchor="start">SP · strategic direction</text>
+<text x="79" y="225" class="body" text-anchor="start">Outcomes, priorities and strategic assumptions</text>
+<rect x="55" y="309" width="500" height="102" rx="12" fill="#ffffff" stroke="#cbd6df" stroke-width="2"/>
+<text x="79" y="344" class="boxhead" text-anchor="start">APP · annual commitments</text>
+<text x="79" y="374" class="body" text-anchor="start">Targets, reporting periods and approved changes</text>
+<rect x="55" y="459" width="500" height="102" rx="12" fill="#ffffff" stroke="#cbd6df" stroke-width="2"/>
+<text x="79" y="494" class="boxhead" text-anchor="start">AOP · departmental execution</text>
+<text x="79" y="524" class="body" text-anchor="start">Activities, requests and resource commitments</text>
+<rect x="840" y="160" width="505" height="300" rx="12" fill="#e4f5fa" stroke="#2aa9c7" stroke-width="2"/>
+<text x="864" y="195" class="boxhead" text-anchor="start">Portfolio · new decision layer</text>
+<text x="864" y="225" class="body" text-anchor="start">Mandate, charter and roadmap</text>
+<text x="864" y="251" class="body" text-anchor="start">Shared intake from three origins</text>
+<text x="864" y="277" class="body" text-anchor="start">Assess, prioritise and balance work</text>
+<text x="864" y="303" class="body" text-anchor="start">Authorise within delegated authority</text>
+<text x="864" y="329" class="body" text-anchor="start">Review delivery, risk and expected value</text>
+<text x="864" y="355" class="body" text-anchor="start"></text>
+<text x="864" y="381" class="body" text-anchor="start">Enduring identity; versioned plans</text>
+<rect x="840" y="570" width="505" height="143" rx="12" fill="#ffffff" stroke="#cbd6df" stroke-width="2"/>
+<text x="864" y="605" class="boxhead" text-anchor="start">Authorised delivery</text>
+<text x="864" y="635" class="body" text-anchor="start">Programmes coordinate related change</text>
+<text x="864" y="661" class="body" text-anchor="start">Projects deliver agreed scope</text>
+<text x="864" y="687" class="body" text-anchor="start">Standalone projects are permitted</text>
+<rect x="55" y="610" width="500" height="103" rx="12" fill="#ffffff" stroke="#cbd6df" stroke-width="2"/>
+<text x="79" y="645" class="boxhead" text-anchor="start">Operations · recurring work</text>
+<text x="79" y="675" class="body" text-anchor="start">Adopt capabilities and realise benefits</text>
+<rect x="55" y="818" width="1290" height="103" rx="12" fill="#eaf3ee" stroke="#8ab39a" stroke-width="2"/>
+<text x="79" y="853" class="boxhead" text-anchor="start">Performance · validated results and evidence</text>
+<text x="79" y="883" class="body" text-anchor="start">Official indicator ownership stays in existing planning / performance functions; portfolio uses linked evidence.</text>
+<path d="M305 262 V309" fill="none" stroke="#526879" stroke-width="2.3" marker-end="url(#arrow)"/>
+<path d="M305 411 V459" fill="none" stroke="#526879" stroke-width="2.3" marker-end="url(#arrow)"/>
+<path d="M305 561 V610" fill="none" stroke="#526879" stroke-width="2.3" marker-end="url(#arrow)"/>
+<path d="M555 211 H840" fill="none" stroke="#526879" stroke-width="2.3" marker-end="url(#arrow)"/>
+<text x="697" y="199" class="edge" text-anchor="middle">Strategic mandate</text>
+<path d="M555 351 H840" fill="none" stroke="#526879" stroke-width="2.3" marker-end="url(#arrow)"/>
+<text x="697" y="331" class="edge" text-anchor="middle">Annual priorities</text>
+<path d="M840 390 H555" fill="none" stroke="#526879" stroke-width="2.3" marker-end="url(#arrow)"/>
+<text x="697" y="413" class="edge" text-anchor="middle">Feasibility feedback</text>
+<path d="M555 510 H697 V445 H840" fill="none" stroke="#526879" stroke-width="2.3" marker-end="url(#arrow)"/>
+<text x="695" y="541" class="edge" text-anchor="middle">Demand and capacity</text>
+<path d="M1092 460 V570" fill="none" stroke="#526879" stroke-width="2.3" marker-end="url(#arrow)"/>
+<text x="1110" y="515" class="edge" text-anchor="start">Authorised scope,</text>
+<text x="1110" y="538" class="edge" text-anchor="start">funding and conditions</text>
+<path d="M840 663 H555" fill="none" stroke="#526879" stroke-width="2.3" marker-end="url(#arrow)"/>
+<text x="697" y="643" class="edge" text-anchor="middle">Accepted capability</text>
+<path d="M305 713 V818" fill="none" stroke="#526879" stroke-width="2.3" marker-end="url(#arrow)"/>
+<text x="321" y="768" class="edge" text-anchor="start">Measured results</text>
+<path d="M1092 713 V818" fill="none" stroke="#526879" stroke-width="2.3" marker-end="url(#arrow)"/>
+<text x="1110" y="768" class="edge" text-anchor="start">Delivery evidence</text>
+<path d="M1345 867 H1374 V310 H1345" fill="none" stroke="#526879" stroke-width="2.3" marker-end="url(#arrow)"/>
+<text x="1364" y="716" transform="rotate(-90 1364 716)" class="small">Evidence informs portfolio review</text>
+<rect x="55" y="955" width="1290" height="67" rx="10" fill="#183042"/>
+<text x="79" y="983" style="font:700 19px Arial;fill:white">Shared constraints: people, skills, funding and organisational capacity</text>
+<text x="79" y="1009" style="font:17px Arial;fill:#dce8ee">Available for new work = capacity − BAU − leave / reserves − existing commitments. Authorities confirm allocations.</text>
+<text x="55" y="1058" class="small" text-anchor="start">Original StratXe proposal informed by PMI organisational context; not a reproduction of Figure 1-3. Arrows show information and decisions.</text>
+</svg>

@@ -50,7 +50,7 @@
   function card(title,body,sub,cls){return '<section class="sx-card '+(cls||'')+'"><div class="sx-cardh"><h3>'+title+'</h3>'+(sub?'<span class="sub">'+sub+'</span>':'')+'</div><div class="sx-cardb">'+body+'</div></section>';}
   function kpi(label,value,note,tone){return '<div class="sx-kpi '+(tone||'')+'"><span class="k">'+label+'</span><b>'+value+'</b><span class="n">'+note+'</span></div>';}
   function roleOptions(){var h='';Object.keys(roles).forEach(function(k){h+='<option value="'+k+'"'+(S.role===k?' selected':'')+'>'+roles[k].label+'</option>';});return h;}
-  function context(){var r=roles[S.role];var name=views[S.area].filter(function(x){return x[0]===S.view;})[0];return '<div class="ppmis-context"><div class="ppmis-context-main"><i>'+r.initials+'</i><div><b>'+r.label+' view</b><span>'+r.description+'</span></div></div><div class="ppmis-context-path">Strategic Plan &nbsp;›&nbsp; Portfolio &nbsp;›&nbsp; <strong>'+esc(name?name[1]:'Overview')+'</strong></div></div>';}
+  function context(){var r=roles[S.role];var name=views[S.area].filter(function(x){return x[0]===S.view;})[0];return '<div class="ppmis-context"><div class="ppmis-context-main"><i>'+r.initials+'</i><div><b>'+r.label+' view</b><span>'+r.description+'</span></div></div><div class="ppmis-context-path">Strategy ↔ Portfolio &nbsp;·&nbsp; <strong>'+esc(name?name[1]:'Overview')+'</strong></div></div>';}
 
   function render(){
     if(!root)return;
@@ -308,14 +308,15 @@
   }
   function benefitReviewsView(){return handover()+card('Value reviews','<table class="sx-t"><thead><tr><th>Delivered capability</th><th>Review</th><th>Operational owner</th><th>Evidence</th><th>Status</th><th></th></tr></thead><tbody><tr><td>Digital Intake Release 1</td><td>90-day value review</td><td>Service Operations</td><td>Turnaround and channel-use report</td><td>'+chip('Overdue','r')+'</td><td><button class="sx-btn primary sm" onclick="ppmis.openModule(\'performance\')">Open performance</button></td></tr><tr><td>Data validation controls</td><td>30-day adoption review</td><td>Information Management</td><td>Quality dashboard</td><td>'+chip('Due 29 Aug','a')+'</td><td><button class="sx-btn sm" onclick="ppmis.notify(\'Value review record opened.\')">Review</button></td></tr></tbody></table>','Results feed Performance and future portfolio decisions');}
 
-  function syncHeader(){var h=document.getElementById('px-modhead');if(!h)return;var s=h.querySelector('.px-mh-sub');if(s)s.textContent='Portfolio and project management information system';var buttons=h.querySelectorAll('.px-mh-btn');if(buttons[0])buttons[0].onclick=function(){window.ppmis.go('overview','summary');};if(buttons[1])buttons[1].onclick=function(){window.ppmis.notify('Portfolio report prepared from the current consolidated view.');};}
+  function syncHeader(){var h=document.getElementById('px-modhead');if(!h)return;var s=h.querySelector('.px-mh-sub');if(s)s.textContent='Portfolio and project management information system';var buttons=h.querySelectorAll('.px-mh-btn');if(buttons[0])buttons[0].onclick=function(){window.ppmis.go('overview','dashboard');};if(buttons[1])buttons[1].onclick=function(){window.ppmis.notify('Portfolio report prepared from the current consolidated view.');};}
   function notify(msg){S.toast=msg;render();setTimeout(function(){S.toast='';render();},2600);}
-  function go(area,view){S.area=area;if(view&&views[area].some(function(x){return x[0]===view;}))S.view=view;else S.view=views[area][0][0];render();}
+  function go(area,view){var aliases={planning:{strategy:['plans','detail'],roadmap:['roadmaps','timeline'],scenarios:['plans','scenarios']},management:{demand:['demand','pipeline'],decisions:['overview','approvals'],mix:['plans','scenarios']},work:{programmes:['investments','programmes'],projects:['investments','projects']},operations:{capacity:['resources','capacity'],benefits:['benefits','tracking'],handover:['benefits','reviews']}};if(aliases[area]){var mapped=aliases[area][view]||Object.values(aliases[area])[0];area=mapped[0];view=mapped[1];}if(!views[area])return;S.area=area;if(view&&views[area].some(function(x){return x[0]===view;}))S.view=view;else S.view=views[area][0][0];render();}
   function setRole(role){S.role=role;var landing={executive:['overview','dashboard'],portfolio:['overview','workspace'],programme:['investments','programmes'],project:['investments','projects'],resource:['resources','capacity'],pmo:['overview','approvals']}[role];go(landing[0],landing[1]);}
-  function openModule(id){if(typeof window.showModule==='function')window.showModule(id);}
+  function openModule(id){if(typeof window.showModule==='function')window.showModule(id==='projects'?'project':id);}
   function decide(id,outcome){var r=requests.filter(function(x){return x.id===id;})[0];if(r)r.status=outcome;notify(id+' recorded as '+outcome+'. The rationale and affected records were added to the decision trail.');}
 
   window.ppmis={
+    refresh:render,
     go:go,
     sub:function(view){S.view=view;render();},
     setRole:setRole,
